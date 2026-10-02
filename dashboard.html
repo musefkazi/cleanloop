@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLEANLOOP | Live Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-block">
+          <div class="brand-logo">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div>
+            <div class="brand-name">CLEANLOOP</div>
+            <small>Waste System</small>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+          <a class="nav-link active" href="#monitoring"><i class="fa-solid fa-wave-square"></i><span>Live Monitoring</span></a>
+          <a class="nav-link" href="#analytics"><i class="fa-solid fa-chart-line"></i><span>Waste Analytics</span></a>
+          <a class="nav-link" href="collection.html"><i class="fa-solid fa-truck"></i><span>Collection</span></a> 
+          <a class="nav-link" href="#bin-status"></a>
+          <a class="nav-link" href="#bin-status"><i class="fa-solid fa-trash-can"></i><span>Bin Status</span></a>
+          <a class="nav-link" href="alerts.html"><i class="fa-solid fa-bell"></i><span>Alerts</span></a>
+          <a class="nav-link" href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a>
+          <a class="nav-link" href="about.html"><i class="fa-solid fa-circle-info"></i><span>About Project</span></a>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="project-title">CLEANLOOP</div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="system-pill"><span class="dot online"></span> System Status: ONLINE</div>
+            <button class="icon-button" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="date-block" id="headerDateTime">--:--</div>
+            <div class="profile-pill">
+              <div class="avatar">A</div>
+              <span>Admin</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="page-header row align-items-center justify-content-between g-3 mb-4">
+          <div class="col-md-8">
+            <h1 class="page-title">Live Waste Management Dashboard</h1>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <div class="demo-toggle-wrap">
+              <span>DEMO MODE</span>
+              <label class="toggle-switch">
+                <input id="demoModeToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+              <strong id="demoModeText">ON</strong>
+            </div>
+          </div>
+        </div>
+
+        <section class="kpi-grid" id="monitoring">
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-weight-scale"></i></div>
+            <div class="kpi-content">
+              <span>Total Waste Collected</span>
+              <strong id="kpi-total-weight">0.0</strong>
+              <small>kg <em class="trend up">+12.5%</em></small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon wet"><i class="fa-solid fa-droplet"></i></div>
+            <div class="kpi-content">
+              <span>Wet Waste</span>
+              <strong id="kpi-wet-weight">0.0</strong>
+              <small>kg <em class="trend up">+8.1%</em></small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon dry"><i class="fa-solid fa-box-open"></i></div>
+            <div class="kpi-content">
+              <span>Dry Waste</span>
+              <strong id="kpi-dry-weight">0.0</strong>
+              <small>kg <em class="trend up">+5.4%</em></small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="kpi-content">
+              <span>Wrong Waste Detected</span>
+              <strong id="kpi-wrong-count">0</strong>
+              <small>items <em class="trend down">-2.0%</em></small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon accent"><i class="fa-solid fa-percent"></i></div>
+            <div class="kpi-content">
+              <span>Average Fill Level</span>
+              <strong id="kpi-fill-level">0%</strong>
+              <small>avg <em class="trend up">+4.3%</em></small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon primary"><i class="fa-solid fa-route"></i></div>
+            <div class="kpi-content">
+              <span>Collection Trips</span>
+              <strong id="kpi-trips">0</strong>
+              <small>this week <em class="trend up">+1</em></small>
+            </div>
+          </div>
+        </section>
+
+        <section class="bin-monitoring-grid">
+          <article class="panel-card bin-card-panel wet-panel">
+            <div class="card-head">
+              <h3>WET WASTE BIN</h3>
+              <span class="status-badge success">NORMAL</span>
+            </div>
+            <div class="bin-reading">
+              <div>
+                <label>Fill Level</label>
+                <strong id="wet-fill-level">68%</strong>
+              </div>
+              <div>
+                <label>Weight</label>
+                <strong id="wet-weight">12.4 kg</strong>
+              </div>
+              <div>
+                <label>Status</label>
+                <strong id="wet-status">NORMAL</strong>
+              </div>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill wet-fill" id="wet-progress" style="width: 68%"></div>
+            </div>
+          </article>
+
+          <article class="panel-card bin-card-panel dry-panel">
+            <div class="card-head">
+              <h3>DRY WASTE BIN</h3>
+              <span class="status-badge success">NORMAL</span>
+            </div>
+            <div class="bin-reading">
+              <div>
+                <label>Fill Level</label>
+                <strong id="dry-fill-level">43%</strong>
+              </div>
+              <div>
+                <label>Weight</label>
+                <strong id="dry-weight">8.7 kg</strong>
+              </div>
+              <div>
+                <label>Status</label>
+                <strong id="dry-status">NORMAL</strong>
+              </div>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill dry-fill" id="dry-progress" style="width: 43%"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="sensor-grid">
+          <div class="section-header-row">
+            <h2>Live Sensor Data</h2>
+            <span class="demo-chip">DEMO / SIMULATED SENSOR DATA</span>
+          </div>
+
+          <div class="sensor-cards">
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>Moisture Sensor</h3><span class="status-badge success">ACTIVE</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-droplet"></i><span>Reading</span><strong id="sensor-moisture">72%</strong></div>
+            </div>
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>Ultrasonic Sensor</h3><span class="status-badge success">ACTIVE</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-ruler"></i><span>Distance</span><strong id="sensor-distance">18 cm</strong></div>
+            </div>
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>Load Cell</h3><span class="status-badge success">ACTIVE</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-scale-balanced"></i><span>Weight</span><strong id="sensor-weight">12.4 kg</strong></div>
+            </div>
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>Servo Motor</h3><span class="status-badge success">READY</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-gear"></i><span>Position</span><strong id="servo-position">DRY BIN</strong></div>
+            </div>
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>LCD Display</h3><span class="status-badge success">ACTIVE</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-display"></i><span>Message</span><strong id="lcd-message">Correct Bin</strong></div>
+            </div>
+            <div class="sensor-card panel-card">
+              <div class="sensor-head"><h3>Buzzer</h3><span class="status-badge success">READY</span></div>
+              <div class="sensor-metric"><i class="fa-solid fa-volume-high"></i><span>State</span><strong id="buzzer-state">READY</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="detection-panel panel-card">
+          <div class="section-header-row">
+            <h2>WASTE DETECTION</h2>
+            <div class="detection-actions">
+              <button class="btn btn-sm btn-secondary" id="simulateDetectionBtn">Simulate Waste Detection</button>
+              <button class="btn btn-sm btn-secondary" id="simulateWetBtn">Simulate Wet Waste</button>
+              <button class="btn btn-sm btn-primary" id="simulateDryBtn">Simulate Dry Waste</button>
+            </div>
+          </div>
+
+          <div class="detection-grid">
+            <div class="detection-summary">
+              <div class="metric-row"><span>Detected Type</span><strong id="waste-type">WET WASTE</strong></div>
+              <div class="metric-row"><span>Moisture</span><strong id="detection-moisture">74%</strong></div>
+              <div class="metric-row"><span>Decision</span><strong id="decision-text">REDIRECT TO WET BIN</strong></div>
+              <div class="metric-row"><span>Servo</span><strong id="servo-status">ACTIVATED</strong></div>
+            </div>
+
+            <div class="detection-flow">
+              <div class="flow-step">Waste Input</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">Moisture Detection</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">Decision</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">Servo Diversion</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">Correct Bin</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="analytics-section" id="analytics">
+          <div class="section-header-row">
+            <h2>Waste Analytics</h2>
+            <div class="date-filters">
+              <button class="filter-btn active" data-range="today">Today</button>
+              <button class="filter-btn" data-range="7d">7 Days</button>
+              <button class="filter-btn" data-range="30d">30 Days</button>
+            </div>
+          </div>
+          <div class="summary-stats">
+            <div class="summary-stat panel-card">
+              <span>Segregation Accuracy</span>
+              <strong>92%</strong>
+            </div>
+            <div class="summary-stat panel-card">
+              <span>Wrong Disposal Rate</span>
+              <strong>8%</strong>
+            </div>
+            <div class="summary-stat panel-card">
+              <span>Average Fill Level</span>
+              <strong>75%</strong>
+            </div>
+            <div class="summary-stat panel-card">
+              <span>Collection Trips</span>
+              <strong>3 / week</strong>
+            </div>
+          </div>
+          <div class="analytic-cards">
+            <div class="chart-card panel-card">
+              <h3>Wet vs Dry Waste</h3>
+              <canvas id="chartWetDry"></canvas>
+            </div>
+            <div class="chart-card panel-card">
+              <h3>Waste Generation Over Time</h3>
+              <canvas id="chartGeneration"></canvas>
+            </div>
+            <div class="chart-card panel-card">
+              <h3>Bin Fill Level</h3>
+              <canvas id="chartFill"></canvas>
+            </div>
+            <div class="chart-card panel-card">
+              <h3>Wrong Disposal Rate</h3>
+              <canvas id="chartWrongRate"></canvas>
+            </div>
+            <div class="chart-card panel-card wide">
+              <h3>Collection Trips</h3>
+              <canvas id="chartTrips"></canvas>
+            </div>
+          </div>
+          <div class="sample-caption">Sample Prototype Results</div>
+        </section>
+
+        <section class="bin-status-section" id="bin-status">
+          <div class="section-header-row">
+            <h2>Bin Status</h2>
+          </div>
+          <div class="status-grid">
+            <article class="panel-card bin-status-card">
+              <div class="bin-visual wet-bin-visual">
+                <div class="bin-top"></div>
+                <div class="bin-body-visual">
+                  <div class="fill-visual wet-fill-visual" id="wetBinVisual" style="height: 68%;"></div>
+                </div>
+              </div>
+              <div class="status-details">
+                <h3>Wet Bin</h3>
+                <ul>
+                  <li><span>Fill level</span><strong id="status-wet-fill">68%</strong></li>
+                  <li><span>Weight</span><strong id="status-wet-weight">12.4 kg</strong></li>
+                  <li><span>Status</span><strong id="status-wet-state">NORMAL</strong></li>
+                  <li><span>Last emptied</span><strong>03:30 PM</strong></li>
+                  <li><span>Capacity</span><strong>25 kg</strong></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="panel-card bin-status-card">
+              <div class="bin-visual dry-bin-visual">
+                <div class="bin-top"></div>
+                <div class="bin-body-visual">
+                  <div class="fill-visual dry-fill-visual" id="dryBinVisual" style="height: 43%;"></div>
+                </div>
+              </div>
+              <div class="status-details">
+                <h3>Dry Bin</h3>
+                <ul>
+                  <li><span>Fill level</span><strong id="status-dry-fill">43%</strong></li>
+                  <li><span>Weight</span><strong id="status-dry-weight">8.7 kg</strong></li>
+                  <li><span>Status</span><strong id="status-dry-state">NORMAL</strong></li>
+                  <li><span>Last emptied</span><strong>02:10 PM</strong></li>
+                  <li><span>Capacity</span><strong>25 kg</strong></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

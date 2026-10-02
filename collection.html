@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CLEANLOOP | Collection Tracking</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand-block">
+                <div class="brand-logo">
+                    ♻
+                </div>
+
+                <div>
+                    <div class="brand-name">CLEANLOOP</div>
+                    <small>Waste System</small>
+                </div>
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a class="nav-link" href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a class="nav-link" href="dashboard.html#monitoring">
+                    Live Monitoring
+                </a>
+
+                <a class="nav-link" href="dashboard.html#analytics">
+                    Waste Analytics
+                </a>
+
+                <a class="nav-link active" href="collection.html">
+                    Collection
+                </a>
+
+                <a class="nav-link" href="alerts.html">
+                    Alerts
+                </a>
+
+                <a class="nav-link" href="history.html">
+                    History
+                </a>
+
+                <a class="nav-link" href="about.html">
+                    About Project
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-panel">
+
+            <header class="topbar">
+
+                <div>
+                    <div class="project-title">CLEANLOOP</div>
+                </div>
+
+                <div class="system-pill">
+                    ● System Status: ONLINE
+                </div>
+
+            </header>
+
+
+            <div class="page-header">
+
+                <h1 class="page-title">
+                    Collection Tracking
+                </h1>
+
+                <p>
+                    Monitor bin collection and housekeeping activity.
+                </p>
+
+            </div>
+
+
+            <!-- Collection Cards -->
+            <section class="collection-grid">
+
+
+                <!-- Wet Bin -->
+                <article class="panel-card collection-card">
+
+                    <div class="card-head">
+
+                        <h3>WET WASTE BIN</h3>
+
+                       <span id="wetCollectionBadge" class="status-badge warning">
+    COLLECTION REQUIRED
+</span>
+                    </div>
+
+
+                    <div class="collection-details">
+
+                        <div>
+                            <span>Fill Level</span>
+                            <strong id="wetCollectionFill">
+                                92%
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Weight</span>
+                            <strong id="wetCollectionWeight">
+                                24.6 kg
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Status</span>
+                            <strong id="wetCollectionStatus">
+    Ready for Collection
+</strong>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="collection-btn"
+                        id="collectWetBtn">
+
+                        Mark as Collected
+
+                    </button>
+
+                </article>
+
+
+                <!-- Dry Bin -->
+                <article class="panel-card collection-card">
+
+                    <div class="card-head">
+
+                        <h3>DRY WASTE BIN</h3>
+
+                        <span class="status-badge success">
+                            NORMAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="collection-details">
+
+                        <div>
+                            <span>Fill Level</span>
+                            <strong id="dryCollectionFill">
+                                43%
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Weight</span>
+                            <strong id="dryCollectionWeight">
+                                8.7 kg
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Status</span>
+                            <strong>
+                                No Collection Required
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="collection-btn secondary"
+                        id="collectDryBtn">
+
+                        Mark as Collected
+
+                    </button>
+
+                </article>
+
+            </section>
+
+
+            <!-- Collection History -->
+            <section class="panel-card history-panel">
+
+                <div class="section-header-row">
+
+                    <h2>Collection History</h2>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Bin</th>
+                                <th>Weight</th>
+                                <th>Collected By</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="collectionHistory">
+
+                            <tr>
+                                <td>02 Oct 2026</td>
+                                <td>Wet Bin</td>
+                                <td>24.6 kg</td>
+                                <td>Housekeeping</td>
+                                <td>
+                                    <span class="status-badge success">
+                                        COMPLETED
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Accountability -->
+            <section class="panel-card accountability-panel">
+
+                <h2>Accountability</h2>
+
+                <div class="accountability-grid">
+
+                    <div>
+                        <span>Responsible Role</span>
+                        <strong>Housekeeping Staff</strong>
+                    </div>
+
+                    <div>
+                        <span>Current Task</span>
+                        <strong>Wet Bin Collection</strong>
+                    </div>
+
+                    <div>
+                        <span>System Monitoring</span>
+                        <strong>Admin</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLEANLOOP | Alerts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-block">
+          <div class="brand-logo">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div>
+            <div class="brand-name">CLEANLOOP</div>
+            <small>Waste System</small>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+          <a class="nav-link" href="dashboard.html#monitoring"><i class="fa-solid fa-wave-square"></i><span>Live Monitoring</span></a>
+          <a class="nav-link" href="dashboard.html#analytics"><i class="fa-solid fa-chart-line"></i><span>Waste Analytics</span></a>
+          <a class="nav-link" href="dashboard.html#bin-status"><i class="fa-solid fa-trash-can"></i><span>Bin Status</span></a>
+          <a class="nav-link active" href="alerts.html"><i class="fa-solid fa-bell"></i><span>Alerts</span></a>
+          <a class="nav-link" href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a>
+          <a class="nav-link" href="about.html"><i class="fa-solid fa-circle-info"></i><span>About Project</span></a>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="project-title">CLEANLOOP</div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="system-pill"><span class="dot online"></span> System Status: ONLINE</div>
+            <button class="icon-button" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="date-block" id="headerDateTime">--:--</div>
+            <div class="profile-pill">
+              <div class="avatar">A</div>
+              <span>Admin</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="page-header row align-items-center justify-content-between g-3 mb-4">
+          <div class="col-md-8">
+            <h1 class="page-title">Alert Management</h1>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <button class="btn btn-primary" id="clearAlertsBtn">Clear Alerts</button>
+          </div>
+        </div>
+
+        <section class="panel-card alerts-panel">
+          <div id="alertsList" class="alerts-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
