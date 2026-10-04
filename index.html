@@ -47,7 +47,44 @@
           <a class="nav-link" href="about.html"><i class="fa-solid fa-circle-info"></i><span>About Project</span></a>
         </nav>
       </aside>
+<!-- COLLECTION REQUESTS -->
+<section class="panel-card" style="margin-top: 25px;">
 
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+
+        <div>
+            <h2>♻ Collection Requests</h2>
+            <p style="margin-top:5px;">
+                Waste collection requests from users.
+            </p>
+        </div>
+
+        <span
+            id="pendingRequestCount"
+            style="
+                background:#fff3cd;
+                color:#856404;
+                padding:7px 12px;
+                border-radius:20px;
+                font-weight:700;
+                font-size:13px;
+            "
+        >
+            0 Pending
+        </span>
+
+    </div>
+
+
+    <div id="collectionRequestsContainer">
+
+        <p id="noRequestsMessage">
+            No collection requests available.
+        </p>
+
+    </div>
+
+</section>
       <main class="main-panel">
         <header class="topbar">
           <div class="topbar-left">
@@ -218,6 +255,106 @@
         });
 
     }
+</script>
+    <script>
+
+function renderCollectionRequests() {
+
+    const container =
+        document.getElementById("collectionRequestsContainer");
+
+    const countElement =
+        document.getElementById("pendingRequestCount");
+
+    const noRequests =
+        document.getElementById("noRequestsMessage");
+
+
+    const savedRequest =
+        localStorage.getItem("cleanloop-collection-request");
+
+
+    if (!savedRequest) {
+
+        countElement.textContent = "0 Pending";
+
+        return;
+
+    }
+
+
+    const request =
+        JSON.parse(savedRequest);
+
+
+    countElement.textContent =
+        request.status + " Request";
+
+
+    container.innerHTML = `
+
+        <div style="
+            border:1px solid #dce8e5;
+            border-radius:12px;
+            padding:18px;
+            margin-top:15px;
+        ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:20px;
+                flex-wrap:wrap;
+            ">
+
+                <div>
+
+                    <h3 style="margin-bottom:8px;">
+                        ${request.name}
+                    </h3>
+
+                    <p>
+                        📞 ${request.mobile}
+                    </p>
+
+                    <p>
+                        📍 ${request.address}
+                    </p>
+
+                    <p style="margin-top:8px; font-size:13px;">
+                        Requested: ${request.requestedAt}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span style="
+                        display:inline-block;
+                        padding:8px 14px;
+                        border-radius:20px;
+                        background:#fff3cd;
+                        color:#856404;
+                        font-weight:700;
+                    ">
+                        ${request.status}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+renderCollectionRequests();
+
 </script>
   </body>
 </html>
