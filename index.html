@@ -407,10 +407,28 @@ function renderCollectionRequests() {
         document.getElementById("pendingRequestCount");
 
 
-    const savedRequests =
-        JSON.parse(
-            localStorage.getItem("cleanloop-collection-requests")
-        ) || [];
+  const newRequests =
+    JSON.parse(
+        localStorage.getItem("cleanloop-collection-requests")
+    ) || [];
+
+const oldRequest =
+    localStorage.getItem("cleanloop-collection-request");
+
+const savedRequests = [...newRequests];
+
+if (oldRequest) {
+    const oldData = JSON.parse(oldRequest);
+
+    const alreadyExists =
+        savedRequests.some(
+            request => request.id === oldData.id
+        );
+
+    if (!alreadyExists) {
+        savedRequests.push(oldData);
+    }
+}
 
 
     if (savedRequests.length === 0) {
