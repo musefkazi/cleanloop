@@ -335,8 +335,10 @@
        LOAD ASSIGNED REQUEST
     ========================= */
 
-    const savedRequest =
-        localStorage.getItem("cleanloop-collection-request");
+    const savedRequests =
+    JSON.parse(
+        localStorage.getItem("cleanloop-collection-requests")
+    ) || [];
 
 
     const requestContainer =
