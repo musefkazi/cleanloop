@@ -1417,3 +1417,63 @@ select {
         white-space: normal;
     }
 }
+/* ============================= */
+/* USER MENU DROPDOWN */
+/* ============================= */
+
+.user-menu {
+    position: relative;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    font: inherit;
+}
+
+.user-profile .fa-chevron-down {
+    font-size: 11px;
+    margin-left: 3px;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 210px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #163c36;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-dropdown a:hover {
+    background: #eef7f4;
+}
+
+.user-dropdown i {
+    width: 18px;
+    text-align: center;
+}
