@@ -374,431 +374,217 @@
 
 </section>
       </main>
-    </div>
+  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="data.js"></script>
-<script src="app.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+
     <script>
-    const userMenuBtn = document.getElementById("userMenuBtn");
-    const userDropdown = document.getElementById("userDropdown");
+      const userMenuBtn = document.getElementById("userMenuBtn");
+      const userDropdown = document.getElementById("userDropdown");
 
-    if (userMenuBtn && userDropdown) {
-
+      if (userMenuBtn && userDropdown) {
         userMenuBtn.addEventListener("click", function (event) {
-            event.stopPropagation();
-            userDropdown.classList.toggle("show");
+          event.stopPropagation();
+          userDropdown.classList.toggle("show");
         });
 
         document.addEventListener("click", function () {
-            userDropdown.classList.remove("show");
+          userDropdown.classList.remove("show");
+        });
+      }
+
+      function getCollectionRequests() {
+        return JSON.parse(
+          localStorage.getItem("cleanloop-collection-requests")
+        ) || [];
+      }
+
+      function renderCollectionRequests() {
+        const container = document.getElementById("collectionRequestsContainer");
+        const countElement = document.getElementById("pendingRequestCount");
+
+        if (!container || !countElement) return;
+
+        const savedRequests = getCollectionRequests();
+
+        const pendingCount = savedRequests.filter(function (request) {
+          return request.status === "Pending";
+        }).length;
+
+        countElement.textContent = pendingCount + " Pending";
+
+        if (savedRequests.length === 0) {
+          container.innerHTML = "<p>No collection requests available.</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+
+        savedRequests.forEach(function (request) {
+          const requestCard = document.createElement("div");
+
+          requestCard.style.cssText =
+            "border:1px solid #dce8e5;border-radius:12px;padding:18px;margin-top:15px;";
+
+          requestCard.innerHTML = `
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              align-items:center;
+              gap:20px;
+              flex-wrap:wrap;
+            ">
+              <div>
+                <h3 style="margin-bottom:8px;">
+                  ${request.name || "Unknown User"}
+                </h3>
+
+                <p>📞 ${request.mobile || "-"}</p>
+                <p>📍 ${request.address || "-"}</p>
+
+                <p style="margin-top:8px;font-size:13px;">
+                  Requested: ${request.requestedAt || "-"}
+                </p>
+
+                ${
+                  request.collector
+                    ? `<p style="margin-top:5px;font-size:13px;">
+                         Collector: ${request.collector}
+                       </p>`
+                    : ""
+                }
+              </div>
+
+              <div>
+                <span style="
+                  display:inline-block;
+                  padding:8px 14px;
+                  border-radius:20px;
+                  background:#fff3cd;
+                  color:#856404;
+                  font-weight:700;
+                ">
+                  ${request.status || "Pending"}
+                </span>
+
+                ${
+                  request.status === "Pending"
+                    ? `
+                      <button
+                        onclick="assignCollector(${request.id})"
+                        style="
+                          display:block;
+                          margin-top:12px;
+                          padding:10px 16px;
+                          border:none;
+                          border-radius:8px;
+                          background:#145c4f;
+                          color:white;
+                          font-weight:700;
+                          cursor:pointer;
+                        "
+                      >
+                        🚛 Assign Collector
+                      </button>
+                    `
+                    : ""
+                }
+              </div>
+            </div>
+          `;
+
+          container.appendChild(requestCard);
+        });
+      }
+
+      function assignCollector(requestId) {
+        const savedRequests = getCollectionRequests();
+
+        const request = savedRequests.find(function (item) {
+          return item.id === requestId;
         });
 
-    }
-</script>
-    <script>
+        if (!request) {
+          alert("Collection request not found.");
+          return;
+        }
 
-function renderCollectionRequests() {
+        request.status = "Assigned";
+        request.collector = "Collector 01";
+        request.assignedAt = new Date().toLocaleString();
 
-    const container =
-        document.getElementById("collectionRequestsContainer");
-
-    const countElement =
-        document.getElementById("pendingRequestCount");
-
-
-  const newRequests =
-    JSON.parse(
-        localStorage.getItem("cleanloop-collection-requests")
-    ) || [];
-
-const oldRequest =
-    localStorage.getItem("cleanloop-collection-request");
-
-const savedRequests = [...newRequests];
-
-if (oldRequest) {
-    const oldData = JSON.parse(oldRequest);
-
-    const alreadyExists =
-        savedRequests.some(
-            request => request.id === oldData.id
+        localStorage.setItem(
+          "cleanloop-collection-requests",
+          JSON.stringify(savedRequests)
         );
 
-    if (!alreadyExists) {
-        savedRequests.push(oldData);
-    }
-}
+        alert("✓ Collector assigned successfully.");
 
+        renderCollectionRequests();
+      }
 
-    if (savedRequests.length === 0) {
+      function updateCollectionAnalytics() {
+        const savedRequests = getCollectionRequests();
 
-        countElement.textContent = "0 Pending";
+        const completedRequests = savedRequests.filter(function (request) {
+          return request.status === "Completed" && request.collection;
+        });
 
-        container.innerHTML = `
-            <p>
-                No collection requests available.
-            </p>
-        `;
+        let wet = 0;
+        let dry = 0;
+        let recyclable = 0;
+        let total = 0;
 
-        return;
-    }
+        completedRequests.forEach(function (request) {
+          const collection = request.collection;
 
+          wet += Number(collection.wetWaste) || 0;
+          dry += Number(collection.dryWaste) || 0;
+          recyclable += Number(collection.recyclableWaste) || 0;
+          total += Number(collection.totalWeight) || 0;
+        });
 
-    const pendingCount =
-        savedRequests.filter(
-            request => request.status === "Pending"
-        ).length;
+        const wetElement =
+          document.getElementById("totalWetCollection");
 
+        const dryElement =
+          document.getElementById("totalDryCollection");
 
-    countElement.textContent =
-        pendingCount + " Pending";
+        const recyclableElement =
+          document.getElementById("totalRecyclableCollection");
 
+        const totalElement =
+          document.getElementById("totalCollectedWaste");
 
-    container.innerHTML = "";
+        const countElement =
+          document.getElementById("completedCollectionCount");
 
+        if (wetElement) {
+          wetElement.textContent = wet.toFixed(1) + " kg";
+        }
 
-    savedRequests.forEach(function(request) {
+        if (dryElement) {
+          dryElement.textContent = dry.toFixed(1) + " kg";
+        }
 
-        const requestCard = document.createElement("div");
-
-        requestCard.style.cssText = `
-            border:1px solid #dce8e5;
-            border-radius:12px;
-            padding:18px;
-            margin-top:15px;
-        `;
-
-
-        requestCard.innerHTML = `
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:20px;
-                flex-wrap:wrap;
-            ">
-
-                <div>
-
-                    <h3 style="margin-bottom:8px;">
-                        ${request.name}
-                    </h3>
-
-                    <p>
-                        📞 ${request.mobile}
-                    </p>
-
-                    <p>
-                        📍 ${request.address}
-                    </p>
-
-                    <p style="
-                        margin-top:8px;
-                        font-size:13px;
-                    ">
-                        Requested: ${request.requestedAt}
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <span style="
-                        display:inline-block;
-                        padding:8px 14px;
-                        border-radius:20px;
-                        background:#fff3cd;
-                        color:#856404;
-                        font-weight:700;
-                    ">
-                        ${request.status}
-                    </span>
-
-
-                    ${
-                        request.status === "Pending"
-                        ? `
-                            <button
-                                onclick="assignCollector(${request.id})"
-                                style="
-                                    display:block;
-                                    margin-top:12px;
-                                    padding:10px 16px;
-                                    border:none;
-                                    border-radius:8px;
-                                    background:#145c4f;
-                                    color:white;
-                                    font-weight:700;
-                                    cursor:pointer;
-                                "
-                            >
-                                🚛 Assign Collector
-                            </button>
-                        `
-                        : ""
-                    }
-
-                </div>
-
-            </div>
-        `;
-
-
-        container.appendChild(requestCard);
-
-    });
-
-}
-
-    const container =
-        document.getElementById("collectionRequestsContainer");
-
-    const countElement =
-        document.getElementById("pendingRequestCount");
-
-    const noRequests =
-        document.getElementById("noRequestsMessage");
-
-
-    const savedRequests =
-    JSON.parse(
-        localStorage.getItem("cleanloop-collection-requests")
-    ) || [];
-
-
-   if (savedRequests.length === 0) {
-
-        countElement.textContent = "0 Pending";
-
-        return;
-
-    }
-
-
-    const request =
-        JSON.parse(savedRequest);
-
-
-    countElement.textContent =
-        request.status + " Request";
-
-
-    container.innerHTML = `
-
-        <div style="
-            border:1px solid #dce8e5;
-            border-radius:12px;
-            padding:18px;
-            margin-top:15px;
-        ">
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:20px;
-                flex-wrap:wrap;
-            ">
-
-                <div>
-
-                    <h3 style="margin-bottom:8px;">
-                        ${request.name}
-                    </h3>
-
-                    <p>
-                        📞 ${request.mobile}
-                    </p>
-
-                    <p>
-                        📍 ${request.address}
-                    </p>
-
-                    <p style="margin-top:8px; font-size:13px;">
-                        Requested: ${request.requestedAt}
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <span style="
-                        display:inline-block;
-                        padding:8px 14px;
-                        border-radius:20px;
-                        background:#fff3cd;
-                        color:#856404;
-                        font-weight:700;
-                    ">
-                        ${request.status}
-                    </span>
-                    <button
-    onclick="assignCollector()"
-    style="
-        margin-top:12px;
-        padding:10px 16px;
-        border:none;
-        border-radius:8px;
-        background:#145c4f;
-        color:white;
-        font-weight:700;
-        cursor:pointer;
-    "
->
-    🚛 Assign Collector
-</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-renderCollectionRequests();
-
-</script>
-    <script>
-
-function assignCollector(requestId) {
-
-    const savedRequests =
-        JSON.parse(
-            localStorage.getItem("cleanloop-collection-requests")
-        ) || [];
-
-
-    const request =
-        savedRequests.find(
-            item => item.id === requestId
-        );
-
-
-    if (!request) {
-
-        alert("Collection request not found.");
-
-        return;
-    }
-
-
-    request.status = "Assigned";
-
-    request.collector = "Collector 01";
-
-    request.assignedAt =
-        new Date().toLocaleString();
-
-
-    localStorage.setItem(
-        "cleanloop-collection-requests",
-        JSON.stringify(savedRequests)
-    );
-
-
-    alert("✓ Collector assigned successfully.");
-
-
-    renderCollectionRequests();
-
-}
-
-    const request = JSON.parse(savedRequest);
-
-    request.status = "Assigned";
-    request.collector = "Collector 01";
-    request.assignedAt = new Date().toLocaleString();
-
-    localStorage.setItem(
-        "cleanloop-collection-request",
-        JSON.stringify(request)
-    );
-
-    alert("✓ Collector assigned successfully.");
-
-    renderCollectionRequests();
-}
-
-</script>
-    <script>
-
-function updateCollectionAnalytics() {
-
-    const savedRequest =
-        localStorage.getItem("cleanloop-collection-request");
-
-    if (!savedRequest) {
-        return;
-    }
-
-    const request =
-        JSON.parse(savedRequest);
-
-    if (
-        request.status !== "Completed" ||
-        !request.collection
-    ) {
-        return;
-    }
-
-    const collection = request.collection;
-
-    const wet =
-        Number(collection.wetWaste) || 0;
-
-    const dry =
-        Number(collection.dryWaste) || 0;
-
-    const recyclable =
-        Number(collection.recyclableWaste) || 0;
-
-    const total =
-        Number(collection.totalWeight) || 0;
-
-
-    const wetElement =
-        document.getElementById("totalWetCollection");
-
-    const dryElement =
-        document.getElementById("totalDryCollection");
-
-    const recyclableElement =
-        document.getElementById("totalRecyclableCollection");
-
-    const totalElement =
-        document.getElementById("totalCollectedWaste");
-
-    const countElement =
-        document.getElementById("completedCollectionCount");
-
-
-    if (wetElement)
-        wetElement.textContent = wet.toFixed(1) + " kg";
-
-    if (dryElement)
-        dryElement.textContent = dry.toFixed(1) + " kg";
-
-    if (recyclableElement)
-        recyclableElement.textContent =
+        if (recyclableElement) {
+          recyclableElement.textContent =
             recyclable.toFixed(1) + " kg";
+        }
 
-    if (totalElement)
-        totalElement.textContent =
-            total.toFixed(1) + " kg";
+        if (totalElement) {
+          totalElement.textContent = total.toFixed(1) + " kg";
+        }
 
-    if (countElement)
-        countElement.textContent = "1";
+        if (countElement) {
+          countElement.textContent = completedRequests.length;
+        }
+      }
 
-}
-updateCollectionAnalytics();
-</script>
+      renderCollectionRequests();
+      updateCollectionAnalytics();
+    </script>
   </body>
 </html>
