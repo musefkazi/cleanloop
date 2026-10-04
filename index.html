@@ -341,6 +341,21 @@ function renderCollectionRequests() {
                     ">
                         ${request.status}
                     </span>
+                    <button
+    onclick="assignCollector()"
+    style="
+        margin-top:12px;
+        padding:10px 16px;
+        border:none;
+        border-radius:8px;
+        background:#145c4f;
+        color:white;
+        font-weight:700;
+        cursor:pointer;
+    "
+>
+    🚛 Assign Collector
+</button>
 
                 </div>
 
@@ -354,6 +369,35 @@ function renderCollectionRequests() {
 
 
 renderCollectionRequests();
+
+</script>
+    <script>
+
+function assignCollector() {
+
+    const savedRequest =
+        localStorage.getItem("cleanloop-collection-request");
+
+    if (!savedRequest) {
+        alert("No collection request found.");
+        return;
+    }
+
+    const request = JSON.parse(savedRequest);
+
+    request.status = "Assigned";
+    request.collector = "Collector 01";
+    request.assignedAt = new Date().toLocaleString();
+
+    localStorage.setItem(
+        "cleanloop-collection-request",
+        JSON.stringify(request)
+    );
+
+    alert("✓ Collector assigned successfully.");
+
+    renderCollectionRequests();
+}
 
 </script>
   </body>
