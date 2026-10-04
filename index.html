@@ -202,5 +202,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="data.js"></script>
 <script src="app.js"></script>
+    <script>
+    const userMenuBtn = document.getElementById("userMenuBtn");
+    const userDropdown = document.getElementById("userDropdown");
+
+    if (userMenuBtn && userDropdown) {
+
+        userMenuBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            userDropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function () {
+            userDropdown.classList.remove("show");
+        });
+
+    }
+</script>
   </body>
 </html>
