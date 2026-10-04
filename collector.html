@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CLEANLOOP | Collector Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .collector-dashboard {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .welcome-card {
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .request-card {
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .request-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #f4f8f7;
+            padding: 15px;
+            border-radius: 9px;
+        }
+
+        .info-box small {
+            display: block;
+            color: #687b77;
+            margin-bottom: 5px;
+        }
+
+        .info-box strong {
+            color: #163c36;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .collection-form {
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #d7e2df;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .total-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef7f4;
+            border-radius: 9px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #145c4f;
+        }
+
+        .complete-btn {
+            margin-top: 20px;
+            padding: 13px 22px;
+            border: none;
+            border-radius: 9px;
+            background: #145c4f;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .complete-btn:hover {
+            background: #0f493f;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 800px) {
+
+            .request-info,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand-block">
+            ♻ CLEANLOOP Collector
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link active" href="collector.html">
+                🚛 Collector Dashboard
+            </a>
+
+            <a class="nav-link" href="index.html">
+                ⚙️ Admin Dashboard
+            </a>
+
+            <a class="nav-link" href="user-dashboard.html">
+                👤 User Portal
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-panel">
+
+        <header class="topbar">
+
+            <div>
+                CLEANLOOP / Collector Dashboard
+            </div>
+
+            <div class="system-pill">
+                ● ONLINE
+            </div>
+
+        </header>
+
+
+        <div class="collector-dashboard">
+
+
+            <!-- WELCOME -->
+
+            <section class="panel-card welcome-card">
+
+                <h1>
+                    🚛 Collector Dashboard
+                </h1>
+
+                <p>
+                    View assigned collection requests and record collected waste.
+                </p>
+
+            </section>
+
+
+            <!-- ASSIGNED REQUEST -->
+
+            <section class="panel-card request-card">
+
+                <h2>
+                    📋 Assigned Collection Request
+                </h2>
+
+                <div id="requestContainer">
+
+                    <p>
+                        Loading collection request...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- COLLECTION FORM -->
+
+            <section
+                class="panel-card collection-form"
+                id="collectionFormSection"
+                style="display:none;"
+            >
+
+                <h2>
+                    ⚖️ Record Waste Collection
+                </h2>
+
+                <p>
+                    Enter the amount of waste collected.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- WET -->
+
+                    <div class="form-group">
+
+                        <label for="wetWeight">
+                            💧 Wet Waste (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="wetWeight"
+                            min="0"
+                            step="0.1"
+                            placeholder="0.0"
+                        >
+
+                    </div>
+
+
+                    <!-- DRY -->
+
+                    <div class="form-group">
+
+                        <label for="dryWeight">
+                            🏜️ Dry Waste (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="dryWeight"
+                            min="0"
+                            step="0.1"
+                            placeholder="0.0"
+                        >
+
+                    </div>
+
+
+                    <!-- RECYCLABLE -->
+
+                    <div class="form-group">
+
+                        <label for="recyclableWeight">
+                            ♻️ Recyclable Waste (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="recyclableWeight"
+                            min="0"
+                            step="0.1"
+                            placeholder="0.0"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="total-box">
+
+                    Total Waste:
+                    <span id="totalWeight">
+                        0.0 kg
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="complete-btn"
+                    id="completeCollectionBtn"
+                >
+                    ✓ Complete Collection
+                </button>
+
+
+                <div
+                    class="message"
+                    id="collectionMessage"
+                ></div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       LOAD ASSIGNED REQUEST
+    ========================= */
+
+    const savedRequest =
+        localStorage.getItem("cleanloop-collection-request");
+
+
+    const requestContainer =
+        document.getElementById("requestContainer");
+
+    const formSection =
+        document.getElementById("collectionFormSection");
+
+
+    if (!savedRequest) {
+
+        requestContainer.innerHTML = `
+            <p>
+                No collection request available.
+            </p>
+        `;
+
+    } else {
+
+        const request =
+            JSON.parse(savedRequest);
+
+
+        if (request.status !== "Assigned") {
+
+            requestContainer.innerHTML = `
+                <p>
+                    No request is currently assigned to the collector.
+                </p>
+            `;
+
+        } else {
+
+            requestContainer.innerHTML = `
+
+                <div class="request-info">
+
+                    <div class="info-box">
+
+                        <small>User</small>
+
+                        <strong>
+                            ${request.name}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <small>Mobile</small>
+
+                        <strong>
+                            ${request.mobile}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <small>Address</small>
+
+                        <strong>
+                            ${request.address}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <span class="status-badge">
+                    ASSIGNED
+                </span>
+
+            `;
+
+            formSection.style.display = "block";
+
+        }
+
+    }
+
+
+    /* =========================
+       TOTAL WEIGHT
+    ========================= */
+
+    const wetInput =
+        document.getElementById("wetWeight");
+
+    const dryInput =
+        document.getElementById("dryWeight");
+
+    const recyclableInput =
+        document.getElementById("recyclableWeight");
+
+    const totalWeight =
+        document.getElementById("totalWeight");
+
+
+    function calculateTotal() {
+
+        const wet =
+            parseFloat(wetInput.value) || 0;
+
+        const dry =
+            parseFloat(dryInput.value) || 0;
+
+        const recyclable =
+            parseFloat(recyclableInput.value) || 0;
+
+
+        const total =
+            wet + dry + recyclable;
+
+
+        totalWeight.textContent =
+            total.toFixed(1) + " kg";
+
+    }
+
+
+    wetInput.addEventListener(
+        "input",
+        calculateTotal
+    );
+
+    dryInput.addEventListener(
+        "input",
+        calculateTotal
+    );
+
+    recyclableInput.addEventListener(
+        "input",
+        calculateTotal
+    );
+
+
+    /* =========================
+       COMPLETE COLLECTION
+    ========================= */
+
+    document
+        .getElementById("completeCollectionBtn")
+        .addEventListener("click", function () {
+
+
+            const wet =
+                parseFloat(wetInput.value) || 0;
+
+            const dry =
+                parseFloat(dryInput.value) || 0;
+
+            const recyclable =
+                parseFloat(recyclableInput.value) || 0;
+
+
+            const total =
+                wet + dry + recyclable;
+
+
+            if (total <= 0) {
+
+                document.getElementById(
+                    "collectionMessage"
+                ).textContent =
+                    "Please enter collection weight.";
+
+                return;
+
+            }
+
+
+            const request =
+                JSON.parse(
+                    localStorage.getItem(
+                        "cleanloop-collection-request"
+                    )
+                );
+
+
+            request.status = "Completed";
+
+            request.collector =
+                "Collector 01";
+
+            request.collection = {
+
+                wetWaste: wet,
+
+                dryWaste: dry,
+
+                recyclableWaste: recyclable,
+
+                totalWeight: total,
+
+                collectedAt:
+                    new Date().toLocaleString()
+
+            };
+
+
+            localStorage.setItem(
+                "cleanloop-collection-request",
+                JSON.stringify(request)
+            );
+
+
+            document.getElementById(
+                "collectionMessage"
+            ).textContent =
+                "✓ Collection completed successfully!";
+
+
+            document.getElementById(
+                "completeCollectionBtn"
+            ).disabled = true;
+
+
+            document.getElementById(
+                "completeCollectionBtn"
+            ).style.opacity = "0.6";
+
+        });
+
+</script>
+
+</body>
+
+</html>
