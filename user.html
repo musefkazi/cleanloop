@@ -4,82 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CLEANLOOP | User Portal</title>
+    <title>CLEANLOOP | User Registration</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .user-container {
-            max-width: 1100px;
-            margin: 30px auto;
+        .auth-container {
+            max-width: 520px;
+            margin: 50px auto;
         }
 
-        .user-welcome {
-            margin-bottom: 25px;
+        .auth-card {
+            padding: 35px;
         }
 
-        .user-welcome h1 {
+        .auth-card h1 {
             margin-bottom: 8px;
         }
 
-        .user-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        .auth-subtitle {
+            margin-bottom: 28px;
         }
 
-        .user-card {
-            padding: 25px;
+        .form-group {
+            margin-bottom: 18px;
         }
 
-        .user-card h2 {
-            margin-bottom: 12px;
-        }
-
-        .dispose-card {
-            text-align: center;
-        }
-
-        .dispose-icon {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
-
-        .dispose-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 13px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
             font-weight: 600;
         }
 
-        .segregation-list {
-            display: grid;
-            gap: 12px;
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d7e2df;
+            border-radius: 9px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1d806d;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #145c4f;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background: #0f493f;
+        }
+
+        .form-message {
             margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
         }
 
-        .seg-item {
-            padding: 14px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-        }
-
-        .notice-card {
+        .login-link {
             margin-top: 20px;
-        }
-
-        @media (max-width: 700px) {
-            .user-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .user-container {
-                margin: 20px 15px;
-            }
+            text-align: center;
         }
     </style>
 </head>
@@ -88,7 +83,6 @@
 
 <div class="app-shell">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="brand-block">
@@ -103,18 +97,18 @@
         <nav class="sidebar-nav">
 
             <a class="nav-link active" href="user.html">
+                👤
+                <span>User Registration</span>
+            </a>
+
+            <a class="nav-link" href="index.html">
                 🏠
                 <span>Home</span>
             </a>
 
             <a class="nav-link" href="dashboard.html">
                 ⚙️
-                <span>Admin Portal</span>
-            </a>
-
-            <a class="nav-link" href="about.html">
-                ℹ️
-                <span>About Project</span>
+                <span>Admin Dashboard</span>
             </a>
 
         </nav>
@@ -122,14 +116,13 @@
     </aside>
 
 
-    <!-- MAIN CONTENT -->
     <main class="main-panel">
 
         <header class="topbar">
 
             <div>
                 <div class="project-title">CLEANLOOP</div>
-                <small>User Portal</small>
+                <small>User Registration</small>
             </div>
 
             <div class="system-pill">
@@ -139,123 +132,108 @@
         </header>
 
 
-        <div class="user-container">
+        <div class="auth-container">
 
-            <!-- WELCOME -->
-            <section class="user-welcome">
+            <section class="panel-card auth-card">
 
-                <h1 class="page-title">
-                    Welcome to CLEANLOOP 👋
-                </h1>
+                <h1>Create User Profile</h1>
 
-                <p>
-                    Help keep your campus clean by disposing waste correctly.
+                <p class="auth-subtitle">
+                    Register to request waste collection through CLEANLOOP.
                 </p>
 
-            </section>
 
+                <form id="registrationForm">
 
-            <!-- USER CARDS -->
-            <section class="user-grid">
+                    <div class="form-group">
 
+                        <label for="userName">
+                            Full Name
+                        </label>
 
-                <!-- DISPOSE WASTE -->
-                <article class="panel-card user-card dispose-card">
+                        <input
+                            type="text"
+                            id="userName"
+                            placeholder="Enter your full name"
+                            required
+                        >
 
-                    <div class="dispose-icon">
-                        🗑️
                     </div>
 
-                    <h2>Dispose Waste</h2>
 
-                    <p>
-                        Place your waste into the CLEANLOOP input system.
-                        The system will detect and segregate the waste.
-                    </p>
+                    <div class="form-group">
+
+                        <label for="userMobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="userMobile"
+                            placeholder="Enter 10-digit mobile number"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="userPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="userPassword"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="userAddress">
+                            Address
+                        </label>
+
+                        <input
+                            type="text"
+                            id="userAddress"
+                            placeholder="Enter your address"
+                            required
+                        >
+
+                    </div>
+
 
                     <button
-                        class="dispose-btn"
-                        onclick="simulateDispose()">
-
-                        Dispose Waste
-
+                        type="submit"
+                        class="register-btn">
+                        Create Profile
                     </button>
 
-                    <p id="disposeStatus"></p>
-
-                </article>
+                </form>
 
 
-                <!-- TODAY'S CONTRIBUTION -->
-                <article class="panel-card user-card">
-
-                    <h2>📊 Your Contribution</h2>
-
-                    <div class="segregation-list">
-
-                        <div class="seg-item">
-                            <span>Waste Disposed</span>
-                            <strong id="userWaste">0.0 kg</strong>
-                        </div>
-
-                        <div class="seg-item">
-                            <span>Correct Segregation</span>
-                            <strong id="userCorrect">0</strong>
-                        </div>
-
-                        <div class="seg-item">
-                            <span>System Status</span>
-                            <strong>ONLINE</strong>
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-            </section>
-
-
-            <!-- SEGREGATION GUIDE -->
-            <section class="panel-card user-card notice-card">
-
-                <h2>♻️ Waste Segregation Guide</h2>
-
-                <div class="segregation-list">
-
-                    <div class="seg-item">
-                        🟢 <strong>Wet Waste</strong>
-                        <br>
-                        Food waste, vegetable peels, fruit waste,
-                        leftover food.
-                    </div>
-
-                    <div class="seg-item">
-                        🔵 <strong>Dry Waste</strong>
-                        <br>
-                        Paper, plastic, cardboard, bottles
-                        and other dry materials.
-                    </div>
-
+                <div
+                    id="registrationMessage"
+                    class="form-message">
                 </div>
 
-            </section>
 
+                <div class="login-link">
 
-            <!-- NOTICE -->
-            <section class="panel-card user-card notice-card">
+                    Already registered?
 
-                <h2>⚠️ Important</h2>
+                    <a href="user-login.html">
+                        Login here
+                    </a>
 
-                <p>
-                    Do not throw waste outside the designated
-                    CLEANLOOP system.
-                </p>
-
-                <p>
-                    CLEANLOOP automatically detects moisture
-                    and redirects waste to the appropriate bin.
-                </p>
+                </div>
 
             </section>
 
@@ -268,129 +246,66 @@
 
 <script>
 
-function simulateDispose() {
+document.getElementById("registrationForm")
+.addEventListener("submit", function(event) {
 
-    // CLEANLOOP central data
-    let state = JSON.parse(
-        localStorage.getItem("cleanloop-state")
-    );
+    event.preventDefault();
 
-    // Agar data nahi mila to stop
-    if (!state) {
-        alert("CLEANLOOP system data not found.");
+    const name =
+        document.getElementById("userName").value.trim();
+
+    const mobile =
+        document.getElementById("userMobile").value.trim();
+
+    const password =
+        document.getElementById("userPassword").value;
+
+    const address =
+        document.getElementById("userAddress").value.trim();
+
+
+    if (mobile.length !== 10 || isNaN(mobile)) {
+
+        document.getElementById("registrationMessage")
+        .textContent =
+        "Please enter a valid 10-digit mobile number.";
+
         return;
     }
 
-    // Simulated waste amount
-    const wasteAmount = 0.5;
 
-    // Simulated wet/dry detection
-    const isWet = state.sensor.moisture > 55;
+    const user = {
 
-    // Update sensor
-    state.sensor.weight = Number(
-        (Number(state.sensor.weight) + wasteAmount).toFixed(1)
-    );
+        name: name,
 
-    state.sensor.type = isWet
-        ? "WET WASTE"
-        : "DRY WASTE";
+        mobile: mobile,
 
-    state.sensor.decision = isWet
-        ? "REDIRECT TO WET BIN"
-        : "REDIRECT TO DRY BIN";
+        password: password,
 
-    state.sensor.servoPosition = isWet
-        ? "WET BIN"
-        : "DRY BIN";
+        address: address,
 
-    // Update correct bin
-    if (isWet) {
+        createdAt: new Date().toISOString()
 
-        state.bins.wet.fill = Math.min(
-            100,
-            state.bins.wet.fill + 3
-        );
+    };
 
-        state.bins.wet.weight = Number(
-            (state.bins.wet.weight + wasteAmount).toFixed(1)
-        );
 
-        state.bins.wet.status =
-            state.bins.wet.fill >= 80
-                ? "FULL"
-                : state.bins.wet.fill >= 60
-                ? "WARNING"
-                : "NORMAL";
-
-    } else {
-
-        state.bins.dry.fill = Math.min(
-            100,
-            state.bins.dry.fill + 3
-        );
-
-        state.bins.dry.weight = Number(
-            (state.bins.dry.weight + wasteAmount).toFixed(1)
-        );
-
-        state.bins.dry.status =
-            state.bins.dry.fill >= 80
-                ? "FULL"
-                : state.bins.dry.fill >= 60
-                ? "WARNING"
-                : "NORMAL";
-    }
-
-    // Add history
-    state.history.unshift({
-
-        time: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit"
-        }),
-
-        type: isWet
-            ? "Wet Waste"
-            : "Dry Waste",
-
-        moisture:
-            state.sensor.moisture + "%",
-
-        decision:
-            "Redirected",
-
-        bin:
-            isWet
-                ? "Wet Bin"
-                : "Dry Bin",
-
-        weight:
-            wasteAmount.toFixed(1) + " kg",
-
-        status:
-            "Success"
-    });
-
-    // Save everything
     localStorage.setItem(
-        "cleanloop-state",
-        JSON.stringify(state)
+        "cleanloop-user",
+        JSON.stringify(user)
     );
 
-    // Update User screen
-    document.getElementById("userWaste").textContent =
-        wasteAmount.toFixed(1) + " kg";
 
-    document.getElementById("userCorrect").textContent =
-        "1";
+    document.getElementById("registrationMessage")
+    .textContent =
+    "✓ Profile created successfully!";
 
-    document.getElementById("disposeStatus").textContent =
-        "✓ Waste detected and automatically segregated.";
 
-}
+    document.getElementById("registrationForm")
+    .reset();
+
+});
 
 </script>
-/user.html
+
 </body>
 </html>
