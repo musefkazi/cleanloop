@@ -650,15 +650,48 @@ renderCollectionRequests();
 </script>
     <script>
 
-function assignCollector() {
+function assignCollector(requestId) {
 
-    const savedRequest =
-        localStorage.getItem("cleanloop-collection-request");
+    const savedRequests =
+        JSON.parse(
+            localStorage.getItem("cleanloop-collection-requests")
+        ) || [];
 
-    if (!savedRequest) {
-        alert("No collection request found.");
+
+    const request =
+        savedRequests.find(
+            item => item.id === requestId
+        );
+
+
+    if (!request) {
+
+        alert("Collection request not found.");
+
         return;
     }
+
+
+    request.status = "Assigned";
+
+    request.collector = "Collector 01";
+
+    request.assignedAt =
+        new Date().toLocaleString();
+
+
+    localStorage.setItem(
+        "cleanloop-collection-requests",
+        JSON.stringify(savedRequests)
+    );
+
+
+    alert("✓ Collector assigned successfully.");
+
+
+    renderCollectionRequests();
+
+}
 
     const request = JSON.parse(savedRequest);
 
