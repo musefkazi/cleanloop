@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CLEANLOOP | User Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .user-dashboard {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .welcome-card {
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-card h1 {
+            margin-bottom: 8px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            padding: 20px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #687b77;
+        }
+
+        .info-card p {
+            font-size: 17px;
+            font-weight: 700;
+            color: #163c36;
+        }
+
+        .request-card {
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .request-btn {
+            margin-top: 15px;
+            padding: 13px 22px;
+            border: none;
+            border-radius: 9px;
+            background: #145c4f;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .request-btn:hover {
+            background: #0f493f;
+        }
+
+        .request-status {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 8px;
+            background: #eef7f4;
+            color: #145c4f;
+            font-weight: 600;
+        }
+
+        .collection-card {
+            padding: 25px;
+        }
+
+        @media (max-width: 800px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand-block">
+            ♻ CLEANLOOP User Portal
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link active" href="user-dashboard.html">
+                👤 Dashboard
+            </a>
+
+            <a class="nav-link" href="user.html">
+                📝 Profile
+            </a>
+
+            <a class="nav-link" href="user-login.html">
+                🔐 Logout
+            </a>
+
+            <a class="nav-link" href="index.html">
+                🏠 Home
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-panel">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                CLEANLOOP / User Dashboard
+            </div>
+
+            <div class="system-pill">
+                ● ONLINE
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+        <div class="user-dashboard">
+
+
+            <!-- WELCOME -->
+            <section class="panel-card welcome-card">
+
+                <h1>
+                    Welcome, <span id="userName">User</span> 👋
+                </h1>
+
+                <p>
+                    Manage your waste collection requests through CLEANLOOP.
+                </p>
+
+            </section>
+
+
+            <!-- USER INFORMATION -->
+            <section class="profile-grid">
+
+                <div class="panel-card info-card">
+
+                    <h3>FULL NAME</h3>
+
+                    <p id="profileName">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="panel-card info-card">
+
+                    <h3>MOBILE NUMBER</h3>
+
+                    <p id="profileMobile">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="panel-card info-card">
+
+                    <h3>ADDRESS</h3>
+
+                    <p id="profileAddress">
+                        --
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- COLLECTION REQUEST -->
+            <section class="panel-card request-card">
+
+                <h2>
+                    ♻ Request Waste Collection
+                </h2>
+
+                <p>
+                    Request the CLEANLOOP collector to collect your waste.
+                </p>
+
+                <button
+                    class="request-btn"
+                    id="requestCollectionBtn"
+                >
+                    Request Collection
+                </button>
+
+
+                <div
+                    class="request-status"
+                    id="requestStatus"
+                >
+                    No collection request submitted.
+                </div>
+
+            </section>
+
+
+            <!-- COLLECTION INFORMATION -->
+            <section class="panel-card collection-card">
+
+                <h2>
+                    🚛 Collection Information
+                </h2>
+
+                <p>
+                    Your collection details will appear here after the
+                    collector completes the request.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       LOAD CURRENT USER
+    ========================= */
+
+    const savedUser =
+        localStorage.getItem("cleanloop-current-user");
+
+    if (!savedUser) {
+
+        window.location.href = "user-login.html";
+
+    } else {
+
+        const user = JSON.parse(savedUser);
+
+        document.getElementById("userName").textContent =
+            user.name;
+
+        document.getElementById("profileName").textContent =
+            user.name;
+
+        document.getElementById("profileMobile").textContent =
+            user.mobile;
+
+        document.getElementById("profileAddress").textContent =
+            user.address;
+
+    }
+
+
+    /* =========================
+       COLLECTION REQUEST
+    ========================= */
+
+    const requestButton =
+        document.getElementById("requestCollectionBtn");
+
+    const requestStatus =
+        document.getElementById("requestStatus");
+
+
+    requestButton.addEventListener("click", function () {
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem("cleanloop-current-user")
+            );
+
+        const request = {
+
+            id: Date.now(),
+
+            name: currentUser.name,
+
+            mobile: currentUser.mobile,
+
+            address: currentUser.address,
+
+            requestedAt:
+                new Date().toLocaleString(),
+
+            status: "Pending",
+
+            collector: "Not Assigned"
+
+        };
+
+
+        localStorage.setItem(
+            "cleanloop-collection-request",
+            JSON.stringify(request)
+        );
+
+
+        requestStatus.textContent =
+            "✓ Collection request submitted. Status: Pending";
+
+    });
+
+</script>
+
+</body>
+
+</html>
