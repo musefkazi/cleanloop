@@ -400,5 +400,77 @@ function assignCollector() {
 }
 
 </script>
+    <script>
+
+function updateCollectionAnalytics() {
+
+    const savedRequest =
+        localStorage.getItem("cleanloop-collection-request");
+
+    if (!savedRequest) {
+        return;
+    }
+
+    const request =
+        JSON.parse(savedRequest);
+
+    if (
+        request.status !== "Completed" ||
+        !request.collection
+    ) {
+        return;
+    }
+
+    const collection = request.collection;
+
+    const wet =
+        Number(collection.wetWaste) || 0;
+
+    const dry =
+        Number(collection.dryWaste) || 0;
+
+    const recyclable =
+        Number(collection.recyclableWaste) || 0;
+
+    const total =
+        Number(collection.totalWeight) || 0;
+
+
+    const wetElement =
+        document.getElementById("totalWetCollection");
+
+    const dryElement =
+        document.getElementById("totalDryCollection");
+
+    const recyclableElement =
+        document.getElementById("totalRecyclableCollection");
+
+    const totalElement =
+        document.getElementById("totalCollectedWaste");
+
+    const countElement =
+        document.getElementById("completedCollectionCount");
+
+
+    if (wetElement)
+        wetElement.textContent = wet.toFixed(1) + " kg";
+
+    if (dryElement)
+        dryElement.textContent = dry.toFixed(1) + " kg";
+
+    if (recyclableElement)
+        recyclableElement.textContent =
+            recyclable.toFixed(1) + " kg";
+
+    if (totalElement)
+        totalElement.textContent =
+            total.toFixed(1) + " kg";
+
+    if (countElement)
+        countElement.textContent = "1";
+
+}
+
+</script>
   </body>
 </html>
