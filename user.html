@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CLEANLOOP | User Portal</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .user-container {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .user-welcome {
+            margin-bottom: 25px;
+        }
+
+        .user-welcome h1 {
+            margin-bottom: 8px;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .user-card {
+            padding: 25px;
+        }
+
+        .user-card h2 {
+            margin-bottom: 12px;
+        }
+
+        .dispose-card {
+            text-align: center;
+        }
+
+        .dispose-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .dispose-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .segregation-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .seg-item {
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .notice-card {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .user-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-container {
+                margin: 20px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand-block">
+            <div class="brand-logo">♻</div>
+
+            <div>
+                <div class="brand-name">CLEANLOOP</div>
+                <small>User Portal</small>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link active" href="user.html">
+                🏠
+                <span>Home</span>
+            </a>
+
+            <a class="nav-link" href="dashboard.html">
+                ⚙️
+                <span>Admin Portal</span>
+            </a>
+
+            <a class="nav-link" href="about.html">
+                ℹ️
+                <span>About Project</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-panel">
+
+        <header class="topbar">
+
+            <div>
+                <div class="project-title">CLEANLOOP</div>
+                <small>User Portal</small>
+            </div>
+
+            <div class="system-pill">
+                ● System Status: ONLINE
+            </div>
+
+        </header>
+
+
+        <div class="user-container">
+
+            <!-- WELCOME -->
+            <section class="user-welcome">
+
+                <h1 class="page-title">
+                    Welcome to CLEANLOOP 👋
+                </h1>
+
+                <p>
+                    Help keep your campus clean by disposing waste correctly.
+                </p>
+
+            </section>
+
+
+            <!-- USER CARDS -->
+            <section class="user-grid">
+
+
+                <!-- DISPOSE WASTE -->
+                <article class="panel-card user-card dispose-card">
+
+                    <div class="dispose-icon">
+                        🗑️
+                    </div>
+
+                    <h2>Dispose Waste</h2>
+
+                    <p>
+                        Place your waste into the CLEANLOOP input system.
+                        The system will detect and segregate the waste.
+                    </p>
+
+                    <button
+                        class="dispose-btn"
+                        onclick="simulateDispose()">
+
+                        Dispose Waste
+
+                    </button>
+
+                    <p id="disposeStatus"></p>
+
+                </article>
+
+
+                <!-- TODAY'S CONTRIBUTION -->
+                <article class="panel-card user-card">
+
+                    <h2>📊 Your Contribution</h2>
+
+                    <div class="segregation-list">
+
+                        <div class="seg-item">
+                            <span>Waste Disposed</span>
+                            <strong id="userWaste">0.0 kg</strong>
+                        </div>
+
+                        <div class="seg-item">
+                            <span>Correct Segregation</span>
+                            <strong id="userCorrect">0</strong>
+                        </div>
+
+                        <div class="seg-item">
+                            <span>System Status</span>
+                            <strong>ONLINE</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </section>
+
+
+            <!-- SEGREGATION GUIDE -->
+            <section class="panel-card user-card notice-card">
+
+                <h2>♻️ Waste Segregation Guide</h2>
+
+                <div class="segregation-list">
+
+                    <div class="seg-item">
+                        🟢 <strong>Wet Waste</strong>
+                        <br>
+                        Food waste, vegetable peels, fruit waste,
+                        leftover food.
+                    </div>
+
+                    <div class="seg-item">
+                        🔵 <strong>Dry Waste</strong>
+                        <br>
+                        Paper, plastic, cardboard, bottles
+                        and other dry materials.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTICE -->
+            <section class="panel-card user-card notice-card">
+
+                <h2>⚠️ Important</h2>
+
+                <p>
+                    Do not throw waste outside the designated
+                    CLEANLOOP system.
+                </p>
+
+                <p>
+                    CLEANLOOP automatically detects moisture
+                    and redirects waste to the appropriate bin.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    let userWaste = 0;
+    let userCorrect = 0;
+
+
+    function simulateDispose() {
+
+        const wasteAmount = 0.5;
+
+        userWaste += wasteAmount;
+        userCorrect++;
+
+        document.getElementById("userWaste").textContent =
+            userWaste.toFixed(1) + " kg";
+
+        document.getElementById("userCorrect").textContent =
+            userCorrect;
+
+        document.getElementById("disposeStatus").textContent =
+            "✓ Waste detected and sent for automatic segregation.";
+
+    }
+
+</script>
+
+</body>
+</html>
