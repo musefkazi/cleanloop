@@ -268,27 +268,127 @@
 
 <script>
 
-    let userWaste = 0;
-    let userCorrect = 0;
+function simulateDispose() {
 
+    // CLEANLOOP central data
+    let state = JSON.parse(
+        localStorage.getItem("cleanloop-state")
+    );
 
-    function simulateDispose() {
-
-        const wasteAmount = 0.5;
-
-        userWaste += wasteAmount;
-        userCorrect++;
-
-        document.getElementById("userWaste").textContent =
-            userWaste.toFixed(1) + " kg";
-
-        document.getElementById("userCorrect").textContent =
-            userCorrect;
-
-        document.getElementById("disposeStatus").textContent =
-            "✓ Waste detected and sent for automatic segregation.";
-
+    // Agar data nahi mila to stop
+    if (!state) {
+        alert("CLEANLOOP system data not found.");
+        return;
     }
+
+    // Simulated waste amount
+    const wasteAmount = 0.5;
+
+    // Simulated wet/dry detection
+    const isWet = state.sensor.moisture > 55;
+
+    // Update sensor
+    state.sensor.weight = Number(
+        (Number(state.sensor.weight) + wasteAmount).toFixed(1)
+    );
+
+    state.sensor.type = isWet
+        ? "WET WASTE"
+        : "DRY WASTE";
+
+    state.sensor.decision = isWet
+        ? "REDIRECT TO WET BIN"
+        : "REDIRECT TO DRY BIN";
+
+    state.sensor.servoPosition = isWet
+        ? "WET BIN"
+        : "DRY BIN";
+
+    // Update correct bin
+    if (isWet) {
+
+        state.bins.wet.fill = Math.min(
+            100,
+            state.bins.wet.fill + 3
+        );
+
+        state.bins.wet.weight = Number(
+            (state.bins.wet.weight + wasteAmount).toFixed(1)
+        );
+
+        state.bins.wet.status =
+            state.bins.wet.fill >= 80
+                ? "FULL"
+                : state.bins.wet.fill >= 60
+                ? "WARNING"
+                : "NORMAL";
+
+    } else {
+
+        state.bins.dry.fill = Math.min(
+            100,
+            state.bins.dry.fill + 3
+        );
+
+        state.bins.dry.weight = Number(
+            (state.bins.dry.weight + wasteAmount).toFixed(1)
+        );
+
+        state.bins.dry.status =
+            state.bins.dry.fill >= 80
+                ? "FULL"
+                : state.bins.dry.fill >= 60
+                ? "WARNING"
+                : "NORMAL";
+    }
+
+    // Add history
+    state.history.unshift({
+
+        time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        }),
+
+        type: isWet
+            ? "Wet Waste"
+            : "Dry Waste",
+
+        moisture:
+            state.sensor.moisture + "%",
+
+        decision:
+            "Redirected",
+
+        bin:
+            isWet
+                ? "Wet Bin"
+                : "Dry Bin",
+
+        weight:
+            wasteAmount.toFixed(1) + " kg",
+
+        status:
+            "Success"
+    });
+
+    // Save everything
+    localStorage.setItem(
+        "cleanloop-state",
+        JSON.stringify(state)
+    );
+
+    // Update User screen
+    document.getElementById("userWaste").textContent =
+        wasteAmount.toFixed(1) + " kg";
+
+    document.getElementById("userCorrect").textContent =
+        "1";
+
+    document.getElementById("disposeStatus").textContent =
+        "✓ Waste detected and automatically segregated.";
+
+}
 
 </script>
 
