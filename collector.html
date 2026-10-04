@@ -514,13 +514,10 @@
             }
 
 
-            const request =
-                JSON.parse(
-                    localStorage.getItem(
-                        "cleanloop-collection-request"
-                    )
-                );
-
+         const request =
+    savedRequests.find(
+        item => item.status === "Assigned"
+    );
 
             request.status = "Completed";
 
