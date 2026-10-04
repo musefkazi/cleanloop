@@ -318,11 +318,17 @@
         };
 
 
-        localStorage.setItem(
-            "cleanloop-collection-request",
-            JSON.stringify(request)
-        );
+      const existingRequests =
+    JSON.parse(
+        localStorage.getItem("cleanloop-collection-requests")
+    ) || [];
 
+existingRequests.push(request);
+
+localStorage.setItem(
+    "cleanloop-collection-requests",
+    JSON.stringify(existingRequests)
+);
 
         requestStatus.textContent =
             "✓ Collection request submitted. Status: Pending";
