@@ -406,15 +406,152 @@ function renderCollectionRequests() {
     const countElement =
         document.getElementById("pendingRequestCount");
 
+
+    const savedRequests =
+        JSON.parse(
+            localStorage.getItem("cleanloop-collection-requests")
+        ) || [];
+
+
+    if (savedRequests.length === 0) {
+
+        countElement.textContent = "0 Pending";
+
+        container.innerHTML = `
+            <p>
+                No collection requests available.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    const pendingCount =
+        savedRequests.filter(
+            request => request.status === "Pending"
+        ).length;
+
+
+    countElement.textContent =
+        pendingCount + " Pending";
+
+
+    container.innerHTML = "";
+
+
+    savedRequests.forEach(function(request) {
+
+        const requestCard = document.createElement("div");
+
+        requestCard.style.cssText = `
+            border:1px solid #dce8e5;
+            border-radius:12px;
+            padding:18px;
+            margin-top:15px;
+        `;
+
+
+        requestCard.innerHTML = `
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:20px;
+                flex-wrap:wrap;
+            ">
+
+                <div>
+
+                    <h3 style="margin-bottom:8px;">
+                        ${request.name}
+                    </h3>
+
+                    <p>
+                        📞 ${request.mobile}
+                    </p>
+
+                    <p>
+                        📍 ${request.address}
+                    </p>
+
+                    <p style="
+                        margin-top:8px;
+                        font-size:13px;
+                    ">
+                        Requested: ${request.requestedAt}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span style="
+                        display:inline-block;
+                        padding:8px 14px;
+                        border-radius:20px;
+                        background:#fff3cd;
+                        color:#856404;
+                        font-weight:700;
+                    ">
+                        ${request.status}
+                    </span>
+
+
+                    ${
+                        request.status === "Pending"
+                        ? `
+                            <button
+                                onclick="assignCollector(${request.id})"
+                                style="
+                                    display:block;
+                                    margin-top:12px;
+                                    padding:10px 16px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#145c4f;
+                                    color:white;
+                                    font-weight:700;
+                                    cursor:pointer;
+                                "
+                            >
+                                🚛 Assign Collector
+                            </button>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+        `;
+
+
+        container.appendChild(requestCard);
+
+    });
+
+}
+
+    const container =
+        document.getElementById("collectionRequestsContainer");
+
+    const countElement =
+        document.getElementById("pendingRequestCount");
+
     const noRequests =
         document.getElementById("noRequestsMessage");
 
 
-    const savedRequest =
-        localStorage.getItem("cleanloop-collection-request");
+    const savedRequests =
+    JSON.parse(
+        localStorage.getItem("cleanloop-collection-requests")
+    ) || [];
 
 
-    if (!savedRequest) {
+   if (savedRequests.length === 0) {
 
         countElement.textContent = "0 Pending";
 
