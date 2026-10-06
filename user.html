@@ -798,7 +798,126 @@ document.getElementById("estimatedTime").textContent =
 
     }
 );
+/* =========================================
+   LIVE COLLECTION STATUS
+========================================= */
 
+function updateLiveCollectionStatus() {
+
+    const requests = JSON.parse(
+        localStorage.getItem(
+            "cleanloop-collection-requests"
+        )
+    ) || [];
+
+    const currentRequestId =
+        document.getElementById("displayRequestId");
+
+    if (!currentRequestId) return;
+
+    const idText =
+        currentRequestId.textContent.replace("#", "").trim();
+
+    if (!idText) return;
+
+    const request = requests.find(function(item) {
+
+        return String(item.id) === idText;
+
+    });
+
+    if (!request) return;
+
+
+    /* COMPLETED */
+
+    if (
+        request.status === "Completed" &&
+        request.collection
+    ) {
+
+        requestStatus.textContent =
+            "Completed";
+
+        requestStatus.style.background =
+            "#d1fae5";
+
+        requestStatus.style.color =
+            "#065f46";
+
+
+        collectorBox.innerHTML = `
+
+            <strong>
+                ✅ Collection Completed
+            </strong>
+
+            <br><br>
+
+            Collector:
+            <strong>
+                ${request.collector || "Collector 01"}
+            </strong>
+
+            <br><br>
+
+            📦 Waste Collected
+
+            <br>
+
+            💧 Wet:
+            ${request.collection.wetWaste || 0} kg
+
+            <br>
+
+            🗑️ Dry:
+            ${request.collection.dryWaste || 0} kg
+
+            <br>
+
+            ♻️ Recyclable:
+            ${request.collection.recyclableWaste || 0} kg
+
+            <br>
+
+            ⚖️ Total:
+            <strong>
+                ${request.collection.totalWeight || 0} kg
+            </strong>
+
+            <br><br>
+
+            🕐 Collected:
+            ${request.collection.collectedAt || "-"}
+
+        `;
+
+
+        const etaBox =
+            document.getElementById("etaBox");
+
+        if (etaBox) {
+
+            etaBox.innerHTML = `
+                ✅
+                <strong>
+                    Waste collection completed successfully.
+                </strong>
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* CHECK EVERY 2 SECONDS */
+
+setInterval(
+    updateLiveCollectionStatus,
+    2000
+);
 </script>
 
 </body>
