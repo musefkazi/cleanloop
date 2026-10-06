@@ -348,12 +348,33 @@ let selectedRequestId = null;
 
 function getAssignedRequests() {
 
-    return savedRequests.filter(function(request) {
+    const assignedRequests = savedRequests.filter(function(request) {
 
         return request.status === "Assigned" &&
                request.collector === "Collector 01";
 
     });
+
+    assignedRequests.sort(function(a, b) {
+
+        const zoneA = a.collectorLocation || "";
+        const zoneB = b.collectorLocation || "";
+
+        const pendingA = savedRequests.filter(function(item) {
+            return item.status === "Assigned" &&
+                   item.collectorLocation === zoneA;
+        }).length;
+
+        const pendingB = savedRequests.filter(function(item) {
+            return item.status === "Assigned" &&
+                   item.collectorLocation === zoneB;
+        }).length;
+
+        return pendingB - pendingA;
+
+    });
+
+    return assignedRequests;
 
 }
 
