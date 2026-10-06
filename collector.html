@@ -358,13 +358,8 @@ function getAssignedRequests() {
 }
 
 function renderAssignedRequests() {
-
-    // Refresh from localStorage so newly submitted User Portal
-    // requests appear without reopening the Collector page.
     savedRequests = getRequests();
-
     const assignedRequests = getAssignedRequests();
-
     if (assignedRequests.length === 0) {
 
         requestContainer.innerHTML = `
