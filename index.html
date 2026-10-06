@@ -469,60 +469,26 @@
                   ${request.status || "Pending"}
                 </span>
 
-                ${
-                  request.status === "Pending"
-                    ? `
-                      <button
-                        onclick="assignCollector(${request.id})"
-                        style="
-                          display:block;
-                          margin-top:12px;
-                          padding:10px 16px;
-                          border:none;
-                          border-radius:8px;
-                          background:#145c4f;
-                          color:white;
-                          font-weight:700;
-                          cursor:pointer;
-                        "
-                      >
-                        🚛 Assign Collector
-                      </button>
-                    `
-                    : ""
-                }
+                <p style="
+                  margin-top:12px;
+                  font-size:13px;
+                  color:#145c4f;
+                  font-weight:700;
+                ">
+                  ${
+                    request.status === "Assigned"
+                      ? "✓ Collector automatically assigned"
+                      : request.status === "Completed"
+                        ? "✓ Collection completed"
+                        : "⏳ Waiting for automatic collector assignment"
+                  }
+                </p>
               </div>
             </div>
           `;
 
           container.appendChild(requestCard);
         });
-      }
-
-      function assignCollector(requestId) {
-        const savedRequests = getCollectionRequests();
-
-        const request = savedRequests.find(function (item) {
-          return item.id === requestId;
-        });
-
-        if (!request) {
-          alert("Collection request not found.");
-          return;
-        }
-
-        request.status = "Assigned";
-        request.collector = "Collector 01";
-        request.assignedAt = new Date().toLocaleString();
-
-        localStorage.setItem(
-          "cleanloop-collection-requests",
-          JSON.stringify(savedRequests)
-        );
-
-        alert("✓ Collector assigned successfully.");
-
-        renderCollectionRequests();
       }
 
       function updateCollectionAnalytics() {
