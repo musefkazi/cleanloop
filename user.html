@@ -404,6 +404,16 @@
                         🔎 Finding nearest available collector...
 
                     </div>
+                    <div
+    id="etaBox"
+    class="collector-box"
+    style="margin-top:10px;"
+>
+    ⏱️ Estimated collection time:
+    <strong id="estimatedTime">
+        Calculating...
+    </strong>
+</div>
 
                 </div>
 
@@ -775,6 +785,13 @@ form.addEventListener(
 
         requestButton.disabled =
             true;
+        const estimatedMinutes = Math.max(
+    10,
+    Math.round(nearestCollector.distance * 10)
+);
+
+document.getElementById("estimatedTime").textContent =
+    estimatedMinutes + " minutes";
 
         requestButton.textContent =
             "✓ Collection Request Assigned";
