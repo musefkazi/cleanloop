@@ -331,237 +331,267 @@
 
 <script>
 
-    /* =========================
-       LOAD ASSIGNED REQUEST
-    ========================= */
-
-    const savedRequests =
-    JSON.parse(
+function getRequests() {
+    return JSON.parse(
         localStorage.getItem("cleanloop-collection-requests")
     ) || [];
+}
 
+const requestContainer =
+    document.getElementById("requestContainer");
 
-    const requestContainer =
-        document.getElementById("requestContainer");
+const formSection =
+    document.getElementById("collectionFormSection");
 
-    const formSection =
-        document.getElementById("collectionFormSection");
+let savedRequests = getRequests();
+let selectedRequestId = null;
 
+function getAssignedRequests() {
 
-    if (!savedRequest) {
+    return savedRequests.filter(function(request) {
+
+        return request.status === "Assigned" &&
+               request.collector === "Collector 01";
+
+    });
+
+}
+
+function renderAssignedRequests() {
+
+    const assignedRequests = getAssignedRequests();
+
+    if (assignedRequests.length === 0) {
 
         requestContainer.innerHTML = `
-            <p>
-                No collection request available.
-            </p>
+            <p>No collection request is currently assigned.</p>
         `;
 
-    } else {
+        formSection.style.display = "none";
+        return;
 
-        const request =
-            JSON.parse(savedRequest);
+    }
 
+    requestContainer.innerHTML = "";
 
-        if (request.status !== "Assigned") {
+    assignedRequests.forEach(function(request) {
 
-            requestContainer.innerHTML = `
-                <p>
-                    No request is currently assigned to the collector.
-                </p>
-            `;
+        const card = document.createElement("div");
 
-        } else {
+        card.style.cssText = `
+            border:1px solid #dce8e5;
+            border-radius:12px;
+            padding:20px;
+            margin-top:15px;
+            cursor:pointer;
+        `;
 
-            requestContainer.innerHTML = `
+        card.innerHTML = `
 
-                <div class="request-info">
+            <div class="request-info">
 
-                    <div class="info-box">
-
-                        <small>User</small>
-
-                        <strong>
-                            ${request.name}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                        <small>Mobile</small>
-
-                        <strong>
-                            ${request.mobile}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                        <small>Address</small>
-
-                        <strong>
-                            ${request.address}
-                        </strong>
-
-                    </div>
-
+                <div class="info-box">
+                    <small>User</small>
+                    <strong>${request.name || "-"}</strong>
                 </div>
 
+                <div class="info-box">
+                    <small>Mobile</small>
+                    <strong>${request.mobile || "-"}</strong>
+                </div>
 
-                <span class="status-badge">
-                    ASSIGNED
-                </span>
+                <div class="info-box">
+                    <small>Address</small>
+                    <strong>${request.address || "-"}</strong>
+                </div>
 
-            `;
+                <div class="info-box">
+                    <small>Request ID</small>
+                    <strong>#${request.id}</strong>
+                </div>
 
-            formSection.style.display = "block";
+                <div class="info-box">
+                    <small>Assigned Collector</small>
+                    <strong>${request.collector || "-"}</strong>
+                </div>
 
-        }
+                <div class="info-box">
+                    <small>Distance</small>
+                    <strong>${request.distance || "-"} km</strong>
+                </div>
 
-    }
+            </div>
 
+            <span class="status-badge">
+                ASSIGNED
+            </span>
 
-    /* =========================
-       TOTAL WEIGHT
-    ========================= */
+        `;
 
-    const wetInput =
-        document.getElementById("wetWeight");
+        card.addEventListener("click", function() {
+            selectRequest(request.id);
+        });
 
-    const dryInput =
-        document.getElementById("dryWeight");
+        requestContainer.appendChild(card);
 
-    const recyclableInput =
-        document.getElementById("recyclableWeight");
+    });
 
-    const totalWeight =
-        document.getElementById("totalWeight");
+    formSection.style.display = "block";
 
+    selectRequest(assignedRequests[0].id);
 
-    function calculateTotal() {
+}
 
-        const wet =
-            parseFloat(wetInput.value) || 0;
+function selectRequest(requestId) {
 
-        const dry =
-            parseFloat(dryInput.value) || 0;
+    selectedRequestId = requestId;
 
-        const recyclable =
-            parseFloat(recyclableInput.value) || 0;
+    const request = savedRequests.find(function(item) {
+        return item.id === requestId;
+    });
 
+    if (!request) return;
 
-        const total =
-            wet + dry + recyclable;
+    formSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
+}
 
-        totalWeight.textContent =
-            total.toFixed(1) + " kg";
+const wetInput =
+    document.getElementById("wetWeight");
 
-    }
+const dryInput =
+    document.getElementById("dryWeight");
 
+const recyclableInput =
+    document.getElementById("recyclableWeight");
 
-    wetInput.addEventListener(
-        "input",
-        calculateTotal
-    );
+const totalWeight =
+    document.getElementById("totalWeight");
 
-    dryInput.addEventListener(
-        "input",
-        calculateTotal
-    );
+function calculateTotal() {
 
-    recyclableInput.addEventListener(
-        "input",
-        calculateTotal
-    );
+    const wet = parseFloat(wetInput.value) || 0;
+    const dry = parseFloat(dryInput.value) || 0;
+    const recyclable =
+        parseFloat(recyclableInput.value) || 0;
 
+    const total = wet + dry + recyclable;
 
-    /* =========================
-       COMPLETE COLLECTION
-    ========================= */
+    totalWeight.textContent =
+        total.toFixed(1) + " kg";
 
-    document
-        .getElementById("completeCollectionBtn")
-        .addEventListener("click", function () {
+}
 
+wetInput.addEventListener("input", calculateTotal);
+dryInput.addEventListener("input", calculateTotal);
+recyclableInput.addEventListener("input", calculateTotal);
 
-            const wet =
-                parseFloat(wetInput.value) || 0;
+document
+    .getElementById("completeCollectionBtn")
+    .addEventListener("click", function() {
 
-            const dry =
-                parseFloat(dryInput.value) || 0;
-
-            const recyclable =
-                parseFloat(recyclableInput.value) || 0;
-
-
-            const total =
-                wet + dry + recyclable;
-
-
-            if (total <= 0) {
-
-                document.getElementById(
-                    "collectionMessage"
-                ).textContent =
-                    "Please enter collection weight.";
-
-                return;
-
-            }
-
-
-         const request =
-    savedRequests.find(
-        item => item.status === "Assigned"
-    );
-
-            request.status = "Completed";
-
-            request.collector =
-                "Collector 01";
-
-            request.collection = {
-
-                wetWaste: wet,
-
-                dryWaste: dry,
-
-                recyclableWaste: recyclable,
-
-                totalWeight: total,
-
-                collectedAt:
-                    new Date().toLocaleString()
-
-            };
-
-
-        localStorage.setItem(
-    "cleanloop-collection-requests",
-    JSON.stringify(savedRequests)
-);
-
+        if (selectedRequestId === null) {
 
             document.getElementById(
                 "collectionMessage"
             ).textContent =
-                "✓ Collection completed successfully!";
+                "Please select a collection request.";
 
+            return;
+
+        }
+
+        const wet = parseFloat(wetInput.value) || 0;
+        const dry = parseFloat(dryInput.value) || 0;
+        const recyclable =
+            parseFloat(recyclableInput.value) || 0;
+
+        const total = wet + dry + recyclable;
+
+        if (total <= 0) {
 
             document.getElementById(
-                "completeCollectionBtn"
-            ).disabled = true;
+                "collectionMessage"
+            ).textContent =
+                "Please enter collection weight.";
 
+            return;
 
-            document.getElementById(
-                "completeCollectionBtn"
-            ).style.opacity = "0.6";
+        }
 
+        savedRequests = getRequests();
+
+        const request = savedRequests.find(function(item) {
+            return item.id === selectedRequestId;
         });
+
+        if (!request) {
+
+            document.getElementById(
+                "collectionMessage"
+            ).textContent =
+                "Collection request not found.";
+
+            return;
+
+        }
+
+        request.status = "Completed";
+
+        request.collection = {
+
+            wetWaste: wet,
+            dryWaste: dry,
+            recyclableWaste: recyclable,
+            totalWeight: total,
+            collectedAt: new Date().toLocaleString()
+
+        };
+
+        localStorage.setItem(
+            "cleanloop-collection-requests",
+            JSON.stringify(savedRequests)
+        );
+
+        document.getElementById(
+            "collectionMessage"
+        ).textContent =
+            "✓ Collection completed successfully!";
+
+        document.getElementById(
+            "completeCollectionBtn"
+        ).disabled = true;
+
+        setTimeout(function() {
+
+            savedRequests = getRequests();
+
+            wetInput.value = "";
+            dryInput.value = "";
+            recyclableInput.value = "";
+
+            calculateTotal();
+
+            document.getElementById(
+                "collectionMessage"
+            ).textContent = "";
+
+            document.getElementById(
+                "completeCollectionBtn"
+            ).disabled = false;
+
+            selectedRequestId = null;
+
+            renderAssignedRequests();
+
+        }, 1000);
+
+    });
+
+renderAssignedRequests();
 
 </script>
 
