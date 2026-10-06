@@ -66,182 +66,557 @@
 
 </nav>
       </aside>
-<main class="main-panel">
 
-    <header class="topbar">
-        ...
-    </header>
 
-    <section class="hero-section">
-        ...
-    </section>
+    <!-- RECORDS CONTAINER -->
+    <div id="collectionRequestsContainer">
 
-    <!-- YAHAN COLLECTION RECORDS -->
-        <section
-    id="collection-records"
-    class="panel-card"
-    style="margin-top: 25px;"
->
-    </section>
-
-    <!-- Collection Analytics -->
-   <section
-    id="collection-analytics"
-    class="section-block"
->
-
-</main>
-  
-      <main class="main-panel">
-        <header class="topbar">
-          <div class="topbar-left">
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-              <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="project-title">CLEANLOOP</div>
-          </div>
-
-          <div class="topbar-right">
-            <div class="system-pill"><span class="dot online"></span> System Status: ONLINE</div>
-            <button class="icon-button" aria-label="Notifications">
-              <i class="fa-solid fa-bell"></i>
-            </button>
-            <div class="date-block" id="headerDateTime">--:--</div>
-            <div class="user-menu">
-
-    <button class="user-profile" id="userMenuBtn">
-        <div class="avatar">A</div>
-       <span>Supervisor</span>
-        <i class="fa-solid fa-chevron-down"></i>
-    </button>
-
-    <div class="user-dropdown" id="userDropdown">
-
-        <a href="index.html">
-            <i class="fa-solid fa-user-shield"></i>
-            Supervisor Dashboard
-        </a>
-
-        <a href="user.html">
-            <i class="fa-solid fa-user"></i>
-            User Portal
-        </a>
+        <p id="noRequestsMessage">
+            No completed collections available.
+        </p>
 
     </div>
 
-</div>
-          </div>
-        </header>
+</section>
+    <main class="main-panel">
 
-        <section class="hero-section">
-          <div class="hero-copy">
-            <div class="eyebrow">Smart Waste Station with Automatic Segregation</div>
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="project-title">CLEANLOOP</div>
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="system-pill">
+                <span class="dot online"></span>
+                System Status: ONLINE
+            </div>
+
+            <button class="icon-button" aria-label="Notifications">
+                <i class="fa-solid fa-bell"></i>
+            </button>
+
+            <div class="date-block" id="headerDateTime">--:--</div>
+
+            <div class="user-menu">
+
+                <button class="user-profile" id="userMenuBtn">
+                    <div class="avatar">A</div>
+                    <span>Supervisor</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <div class="user-dropdown" id="userDropdown">
+
+                    <a href="index.html">
+                        <i class="fa-solid fa-user-shield"></i>
+                        Supervisor Dashboard
+                    </a>
+
+                    <a href="user.html">
+                        <i class="fa-solid fa-user"></i>
+                        User Portal
+                    </a>
+
+                    <a href="collector.html">
+                        <i class="fa-solid fa-truck"></i>
+                        Collector Panel
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero-section">
+
+        <div class="hero-copy">
+
+            <div class="eyebrow">
+                Smart Waste Station with Automatic Segregation
+            </div>
+
             <h1>CLEANLOOP</h1>
-            <p class="hero-subtitle">Detects Wrong Waste • Prevents Contamination • Keeps Campuses Cleaner</p>
+
+            <p class="hero-subtitle">
+                Detects Wrong Waste • Prevents Contamination • Keeps Campuses Cleaner
+            </p>
+
             <div class="hero-actions">
-              <a href="dashboard.html" class="btn btn-primary">View Live Dashboard</a>
-              <a href="#how-it-works" class="btn btn-secondary">Explore Project</a>
+
+                <a href="dashboard.html" class="btn btn-primary">
+                    View Live Dashboard
+                </a>
+
+                <a href="#how-it-works" class="btn btn-secondary">
+                    Explore Project
+                </a>
+
             </div>
+
             <div class="feature-list horizontal">
-              <span><i class="fa-solid fa-check"></i> Moisture detection</span>
-              <span><i class="fa-solid fa-check"></i> Automatic diversion</span>
-              <span><i class="fa-solid fa-check"></i> Fill-level monitoring</span>
-            </div>
-          </div>
 
-          <div class="hero-visual">
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Moisture detection
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Automatic diversion
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-check"></i>
+                    Fill-level monitoring
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-visual">
+
             <div class="smart-bin-scene">
-              <div class="bin-card wet-bin">
-                <div class="bin-label">WET WASTE</div>
-                <div class="bin-body">
-                  <div class="bin-fill" style="height: 68%"></div>
+
+                <div class="bin-card wet-bin">
+
+                    <div class="bin-label">
+                        WET WASTE
+                    </div>
+
+                    <div class="bin-body">
+                        <div
+                            class="bin-fill"
+                            style="height: 68%"
+                        ></div>
+                    </div>
+
+                    <div class="bin-meta">
+                        <span>Moisture</span>
+                        <strong>72%</strong>
+                    </div>
+
                 </div>
-                <div class="bin-meta">
-                  <span>Moisture</span>
-                  <strong>72%</strong>
+
+
+                <div class="bin-card dry-bin">
+
+                    <div class="bin-label">
+                        DRY WASTE
+                    </div>
+
+                    <div class="bin-body">
+                        <div
+                            class="bin-fill dry"
+                            style="height: 44%"
+                        ></div>
+                    </div>
+
+                    <div class="bin-meta">
+                        <span>Moisture</span>
+                        <strong>28%</strong>
+                    </div>
+
                 </div>
-              </div>
 
-              <div class="bin-card dry-bin">
-                <div class="bin-label">DRY WASTE</div>
-                <div class="bin-body">
-                  <div class="bin-fill dry" style="height: 44%"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COLLECTION RECORDS -->
+    <section
+        id="collection-records"
+        class="panel-card"
+        style="margin-top:25px;"
+    >
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:20px;
+                gap:15px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <div>
+
+                <h2>♻ Collection Records</h2>
+
+                <p style="margin-top:5px;">
+                    Completed waste collection records.
+                </p>
+
+            </div>
+
+
+            <span
+                id="pendingRequestCount"
+                style="
+                    display:inline-block;
+                    padding:8px 14px;
+                    border-radius:20px;
+                    background:#e8f5e9;
+                    color:#2e7d32;
+                    font-weight:700;
+                "
+            >
+                0 Collections
+            </span>
+
+        </div>
+
+
+        <div id="collectionRequestsContainer">
+
+            <p id="noRequestsMessage">
+
+                No completed collections available.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROJECT ADVANTAGES -->
+    <section class="landing-benefits section-block">
+
+        <div class="section-heading center">
+
+            <span class="section-kicker">
+                Project advantages
+            </span>
+
+            <h2>
+                Cleaner, smarter, healthier campus operations
+            </h2>
+
+        </div>
+
+
+        <div class="benefits-grid">
+
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-seedling"></i>
                 </div>
-                <div class="bin-meta">
-                  <span>Moisture</span>
-                  <strong>28%</strong>
+
+                <h3>Cleaner Campus</h3>
+
+                <p>
+                    Improves disposal hygiene by correctly redirecting waste at the source.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-wallet"></i>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        <section class="landing-benefits section-block">
-          <div class="section-heading center">
-            <span class="section-kicker">Project advantages</span>
-            <h2>Cleaner, smarter, healthier campus operations</h2>
-          </div>
+                <h3>Reduced Maintenance Cost</h3>
 
-          <div class="benefits-grid">
-            <div class="info-card">
-              <div class="feature-icon green"><i class="fa-solid fa-seedling"></i></div>
-              <h3>Cleaner Campus</h3>
-              <p>Improves disposal hygiene by correctly redirecting waste at the source.</p>
-            </div>
-            <div class="info-card">
-              <div class="feature-icon green"><i class="fa-solid fa-wallet"></i></div>
-              <h3>Reduced Maintenance Cost</h3>
-              <p>Prevents overflow and reduces excess cleaning and bin servicing effort.</p>
-            </div>
-            <div class="info-card">
-              <div class="feature-icon green"><i class="fa-solid fa-shield-heart"></i></div>
-              <h3>Hygienic Surroundings</h3>
-              <p>Creates safer public spaces by guarding against mixed and contaminated waste.</p>
-            </div>
-            <div class="info-card">
-              <div class="feature-icon green"><i class="fa-solid fa-recycle"></i></div>
-              <h3>Sustainable Waste Management</h3>
-              <p>Encourages better segregation and supports campus recycling goals.</p>
-            </div>
-          </div>
-        </section>
+                <p>
+                    Prevents overflow and reduces excess cleaning and bin servicing effort.
+                </p>
 
-        <section class="how-it-works section-block" id="how-it-works">
-          <div class="section-heading center">
-            <span class="section-kicker">How it works</span>
-            <h2>Automatic segregation in five simple steps</h2>
-          </div>
+            </div>
 
-          <div class="steps-grid">
-            <div class="step-item">
-              <div class="step-number">01</div>
-              <h3>User throws waste</h3>
-              <p>Waste is deposited into the automated disposal station.</p>
+
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+
+                <h3>Hygienic Surroundings</h3>
+
+                <p>
+                    Creates safer public spaces by guarding against mixed and contaminated waste.
+                </p>
+
             </div>
-            <div class="step-item">
-              <div class="step-number">02</div>
-              <h3>Moisture detection</h3>
-              <p>The sensor measures moisture content to identify wet or dry material.</p>
+
+
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-recycle"></i>
+                </div>
+
+                <h3>Sustainable Waste Management</h3>
+
+                <p>
+                    Encourages better segregation and supports campus recycling goals.
+                </p>
+
             </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section
+        class="how-it-works section-block"
+        id="how-it-works"
+    >
+
+        <div class="section-heading center">
+
+            <span class="section-kicker">
+                How it works
+            </span>
+
+            <h2>
+                Automatic segregation in five simple steps
+            </h2>
+
+        </div>
+
+
+        <div class="steps-grid">
+
             <div class="step-item">
-              <div class="step-number">03</div>
-              <h3>Decision</h3>
-              <p>The system determines whether the waste matches the correct bin category.</p>
+
+                <div class="step-number">01</div>
+
+                <h3>User throws waste</h3>
+
+                <p>
+                    Waste is deposited into the automated disposal station.
+                </p>
+
             </div>
+
+
             <div class="step-item">
-              <div class="step-number">04</div>
-              <h3>Automatic diversion</h3>
-              <p>A servo motor rotates the flap to send the item to the correct receptacle.</p>
+
+                <div class="step-number">02</div>
+
+                <h3>Moisture detection</h3>
+
+                <p>
+                    The sensor measures moisture content to identify wet or dry material.
+                </p>
+
             </div>
+
+
             <div class="step-item">
-              <div class="step-number">05</div>
-              <h3>Fill-level monitoring</h3>
-              <p>Ultrasonic sensors and load cells continuously monitor capacity and weight.</p>
+
+                <div class="step-number">03</div>
+
+                <h3>Decision</h3>
+
+                <p>
+                    The system determines whether the waste matches the correct bin category.
+                </p>
+
             </div>
-          </div>
-        </section>
-        <!-- COLLECTION ANALYTICS -->
-<section class="section-block">
+
+
+            <div class="step-item">
+
+                <div class="step-number">04</div>
+
+                <h3>Automatic diversion</h3>
+
+                <p>
+                    A servo motor rotates the flap to send the item to the correct receptacle.
+                </p>
+
+            </div>
+
+
+            <div class="step-item">
+
+                <div class="step-number">05</div>
+
+                <h3>Fill-level monitoring</h3>
+
+                <p>
+                    Ultrasonic sensors and load cells continuously monitor capacity and weight.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COLLECTION ANALYTICS -->
+    <section
+        id="collection-analytics"
+        class="section-block"
+    >
+
+        <div class="section-heading">
+
+            <span class="section-kicker">
+                Collection Analytics
+            </span>
+
+            <h2>
+                Waste Collection Summary
+            </h2>
+
+            <p>
+                Waste collected through CLEANLOOP collection requests.
+            </p>
+
+        </div>
+
+
+        <div class="benefits-grid">
+
+
+            <!-- TOTAL WASTE -->
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-weight-scale"></i>
+                </div>
+
+                <h3>Total Waste Collected</h3>
+
+                <p
+                    id="totalCollectedWaste"
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        color:#145c4f;
+                    "
+                >
+                    0.0 kg
+                </p>
+
+            </div>
+
+
+            <!-- WET WASTE -->
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+
+                <h3>Wet Waste</h3>
+
+                <p
+                    id="totalWetCollection"
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        color:#145c4f;
+                    "
+                >
+                    0.0 kg
+                </p>
+
+            </div>
+
+
+            <!-- DRY WASTE -->
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+
+                <h3>Dry Waste</h3>
+
+                <p
+                    id="totalDryCollection"
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        color:#145c4f;
+                    "
+                >
+                    0.0 kg
+                </p>
+
+            </div>
+
+
+            <!-- RECYCLABLE -->
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-recycle"></i>
+                </div>
+
+                <h3>Recyclable Waste</h3>
+
+                <p
+                    id="totalRecyclableCollection"
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        color:#145c4f;
+                    "
+                >
+                    0.0 kg
+                </p>
+
+            </div>
+
+
+            <!-- COMPLETED COLLECTIONS -->
+            <div class="info-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-truck"></i>
+                </div>
+
+                <h3>Completed Collections</h3>
+
+                <p
+                    id="completedCollectionCount"
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        color:#145c4f;
+                    "
+                >
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+      <!-- COLLECTION ANALYTICS -->
+<section
+    id="collection-analytics"
+    class="section-block"
+>
 
     <div class="section-heading">
         <span class="section-kicker">Collection Analytics</span>
