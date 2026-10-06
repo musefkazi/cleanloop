@@ -590,6 +590,38 @@ function renderCollectionRequests() {
 
     const savedRequests =
         getCollectionRequests();
+  const pendingCount = savedRequests.filter(function(request) {
+    return request.status === "Pending";
+}).length;
+
+const assignedCount = savedRequests.filter(function(request) {
+    return request.status === "Assigned";
+}).length;
+
+const completedCount = savedRequests.filter(function(request) {
+    return request.status === "Completed";
+}).length;
+
+const pendingElement =
+    document.getElementById("pendingRequestCount");
+
+const assignedElement =
+    document.getElementById("assignedRequestCount");
+
+const completedElement =
+    document.getElementById("completedRequestCount");
+
+if (pendingElement) {
+    pendingElement.textContent = pendingCount + " Pending";
+}
+
+if (assignedElement) {
+    assignedElement.textContent = assignedCount + " Assigned";
+}
+
+if (completedElement) {
+    completedElement.textContent = completedCount + " Completed";
+}
 
     const completedRequests =
         savedRequests.filter(function (request) {
