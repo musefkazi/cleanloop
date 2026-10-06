@@ -37,15 +37,34 @@
           </div>
         </div>
 
-        <nav class="sidebar-nav">
-          <a class="nav-link active" href="index.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
-          <a class="nav-link" href="dashboard.html#monitoring"><i class="fa-solid fa-wave-square"></i><span>Live Monitoring</span></a>
-          <a class="nav-link" href="dashboard.html#analytics"><i class="fa-solid fa-chart-line"></i><span>Waste Analytics</span></a>
-          <a class="nav-link" href="dashboard.html#bin-status"><i class="fa-solid fa-trash-can"></i><span>Bin Status</span></a>
-          <a class="nav-link" href="alerts.html"><i class="fa-solid fa-bell"></i><span>Alerts</span></a>
-          <a class="nav-link" href="history.html"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a>
-          <a class="nav-link" href="about.html"><i class="fa-solid fa-circle-info"></i><span>About Project</span></a>
-        </nav>
+       <nav class="sidebar-nav">
+
+    <a class="nav-link active" href="index.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Supervisor Dashboard</span>
+    </a>
+
+    <a class="nav-link" href="#collection-records">
+        <i class="fa-solid fa-truck"></i>
+        <span>Collection Records</span>
+    </a>
+
+    <a class="nav-link" href="#collection-analytics">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Waste Analytics</span>
+    </a>
+
+    <a class="nav-link" href="user.html">
+        <i class="fa-solid fa-user"></i>
+        <span>User Portal</span>
+    </a>
+
+    <a class="nav-link" href="collector.html">
+        <i class="fa-solid fa-truck"></i>
+        <span>Collector Panel</span>
+    </a>
+
+</nav>
       </aside>
 <main class="main-panel">
 
@@ -58,14 +77,18 @@
     </section>
 
     <!-- YAHAN COLLECTION RECORDS -->
-    <section class="panel-card" style="margin-top: 25px;">
-        ...
+        <section
+    id="collection-records"
+    class="panel-card"
+    style="margin-top: 25px;"
+>
     </section>
 
     <!-- Collection Analytics -->
-    <section class="section-block">
-        ...
-    </section>
+   <section
+    id="collection-analytics"
+    class="section-block"
+>
 
 </main>
   
@@ -88,7 +111,7 @@
 
     <button class="user-profile" id="userMenuBtn">
         <div class="avatar">A</div>
-        <span>Admin</span>
+       <span>Supervisor</span>
         <i class="fa-solid fa-chevron-down"></i>
     </button>
 
@@ -96,7 +119,7 @@
 
         <a href="index.html">
             <i class="fa-solid fa-user-shield"></i>
-            Admin Dashboard
+            Supervisor Dashboard
         </a>
 
         <a href="user.html">
