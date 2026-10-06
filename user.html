@@ -4,26 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CLEANLOOP | User Registration</title>
+    <title>CLEANLOOP | User Portal</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .auth-container {
-            max-width: 520px;
-            margin: 50px auto;
+        .user-container {
+            max-width: 850px;
+            margin: 35px auto;
         }
 
-        .auth-card {
-            padding: 35px;
+        .user-card {
+            padding: 30px;
         }
 
-        .auth-card h1 {
-            margin-bottom: 8px;
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
-        .auth-subtitle {
-            margin-bottom: 28px;
+        .user-header h1 {
+            margin-bottom: 6px;
+        }
+
+        .user-subtitle {
+            color: #687b77;
         }
 
         .form-group {
@@ -50,9 +59,9 @@
             border-color: #1d806d;
         }
 
-        .register-btn {
+        .request-btn {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             border: none;
             border-radius: 9px;
             background: #145c4f;
@@ -62,19 +71,71 @@
             cursor: pointer;
         }
 
-        .register-btn:hover {
+        .request-btn:hover {
             background: #0f493f;
         }
 
-        .form-message {
+        .request-btn:disabled {
+            background: #8ca9a3;
+            cursor: not-allowed;
+        }
+
+        .status-card {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f4faf8;
+            border: 1px solid #dce8e5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #856404;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .collector-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            border: 1px solid #dce8e5;
+        }
+
+        .message {
             margin-top: 15px;
             text-align: center;
             font-weight: 600;
         }
 
-        .login-link {
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             margin-top: 20px;
-            text-align: center;
+        }
+
+        .info-item {
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8fbfa;
+            border: 1px solid #e1ebe8;
+        }
+
+        .info-item small {
+            display: block;
+            color: #71817d;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -83,22 +144,27 @@
 
 <div class="app-shell">
 
+    <!-- SIDEBAR -->
+
     <aside class="sidebar">
 
         <div class="brand-block">
+
             <div class="brand-logo">♻</div>
 
             <div>
                 <div class="brand-name">CLEANLOOP</div>
                 <small>User Portal</small>
             </div>
+
         </div>
+
 
         <nav class="sidebar-nav">
 
             <a class="nav-link active" href="user.html">
                 👤
-                <span>User Registration</span>
+                <span>User Portal</span>
             </a>
 
             <a class="nav-link" href="index.html">
@@ -111,19 +177,34 @@
                 <span>Admin Dashboard</span>
             </a>
 
+            <a class="nav-link" href="collector.html">
+                🚛
+                <span>Collector Panel</span>
+            </a>
+
         </nav>
 
     </aside>
 
+
+    <!-- MAIN PANEL -->
 
     <main class="main-panel">
 
         <header class="topbar">
 
             <div>
-                <div class="project-title">CLEANLOOP</div>
-                <small>User Registration</small>
+
+                <div class="project-title">
+                    CLEANLOOP
+                </div>
+
+                <small>
+                    User Waste Collection Portal
+                </small>
+
             </div>
+
 
             <div class="system-pill">
                 ● System Status: ONLINE
@@ -132,18 +213,34 @@
         </header>
 
 
-        <div class="auth-container">
+        <div class="user-container">
 
-            <section class="panel-card auth-card">
+            <!-- USER PROFILE -->
 
-                <h1>Create User Profile</h1>
+            <section class="panel-card user-card">
 
-                <p class="auth-subtitle">
-                    Register to request waste collection through CLEANLOOP.
-                </p>
+                <div class="user-header">
+
+                    <div>
+
+                        <h1>
+                            Request Waste Collection
+                        </h1>
+
+                        <p class="user-subtitle">
+                            Enter your details and request waste collection.
+                            CLEANLOOP will automatically assign the nearest
+                            available collector.
+                        </p>
+
+                    </div>
+
+                </div>
 
 
-                <form id="registrationForm">
+                <!-- REQUEST FORM -->
+
+                <form id="collectionRequestForm">
 
                     <div class="form-group">
 
@@ -180,22 +277,6 @@
 
                     <div class="form-group">
 
-                        <label for="userPassword">
-                            Password
-                        </label>
-
-                        <input
-                            type="password"
-                            id="userPassword"
-                            placeholder="Create a password"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
                         <label for="userAddress">
                             Address
                         </label>
@@ -203,7 +284,7 @@
                         <input
                             type="text"
                             id="userAddress"
-                            placeholder="Enter your address"
+                            placeholder="Enter your collection address"
                             required
                         >
 
@@ -212,26 +293,117 @@
 
                     <button
                         type="submit"
-                        class="register-btn">
-                        Create Profile
+                        id="requestButton"
+                        class="request-btn">
+
+                        🚛 Request Waste Collection
+
                     </button>
 
                 </form>
 
 
                 <div
-                    id="registrationMessage"
-                    class="form-message">
+                    id="requestMessage"
+                    class="message">
                 </div>
 
 
-                <div class="login-link">
+                <!-- USER INFORMATION -->
 
-                    Already registered?
+                <div
+                    id="userInfo"
+                    class="info-grid"
+                    style="display:none;">
 
-                    <a href="user-login.html">
-                        Login here
-                    </a>
+                    <div class="info-item">
+
+                        <small>
+                            User
+                        </small>
+
+                        <strong id="displayUserName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            Mobile
+                        </small>
+
+                        <strong id="displayUserMobile">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            Address
+                        </small>
+
+                        <strong id="displayUserAddress">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <small>
+                            Request ID
+                        </small>
+
+                        <strong id="displayRequestId">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUEST STATUS -->
+
+                <div
+                    id="statusCard"
+                    class="status-card"
+                    style="display:none;">
+
+                    <h3>
+                        Collection Request Status
+                    </h3>
+
+
+                    <div>
+
+                        Status:
+
+                        <span
+                            id="requestStatus"
+                            class="status-badge">
+
+                            Pending
+
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="collectorBox"
+                        class="collector-box">
+
+                        🔎 Finding nearest available collector...
+
+                    </div>
 
                 </div>
 
@@ -246,64 +418,369 @@
 
 <script>
 
-document.getElementById("registrationForm")
-.addEventListener("submit", function(event) {
+const form =
+    document.getElementById("collectionRequestForm");
 
-    event.preventDefault();
+const requestButton =
+    document.getElementById("requestButton");
 
-    const name =
-        document.getElementById("userName").value.trim();
+const requestMessage =
+    document.getElementById("requestMessage");
 
-    const mobile =
-        document.getElementById("userMobile").value.trim();
+const statusCard =
+    document.getElementById("statusCard");
 
-    const password =
-        document.getElementById("userPassword").value;
+const requestStatus =
+    document.getElementById("requestStatus");
 
-    const address =
-        document.getElementById("userAddress").value.trim();
+const collectorBox =
+    document.getElementById("collectorBox");
 
 
-    if (mobile.length !== 10 || isNaN(mobile)) {
 
-        document.getElementById("registrationMessage")
-        .textContent =
-        "Please enter a valid 10-digit mobile number.";
+/*
+====================================================
+GET EXISTING COLLECTION REQUESTS
+====================================================
+*/
 
-        return;
+function getCollectionRequests() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "cleanloop-collection-requests"
+        )
+    ) || [];
+
+}
+
+
+
+/*
+====================================================
+AVAILABLE COLLECTORS
+====================================================
+
+Prototype collector locations.
+
+In the future these coordinates can come
+from GPS / backend / database.
+*/
+
+const collectors = [
+
+    {
+        id: 1,
+        name: "Collector 01",
+        location: "Zone A",
+        distance: 1.2,
+        available: true
+    },
+
+    {
+        id: 2,
+        name: "Collector 02",
+        location: "Zone B",
+        distance: 2.4,
+        available: true
+    },
+
+    {
+        id: 3,
+        name: "Collector 03",
+        location: "Zone C",
+        distance: 3.1,
+        available: true
+    }
+
+];
+
+
+
+/*
+====================================================
+FIND NEAREST AVAILABLE COLLECTOR
+====================================================
+*/
+
+function findNearestCollector() {
+
+    const availableCollectors =
+        collectors.filter(function(collector) {
+
+            return collector.available === true;
+
+        });
+
+
+    if (availableCollectors.length === 0) {
+
+        return null;
+
     }
 
 
-    const user = {
+    availableCollectors.sort(function(a, b) {
 
-        name: name,
+        return a.distance - b.distance;
 
-        mobile: mobile,
-
-        password: password,
-
-        address: address,
-
-        createdAt: new Date().toISOString()
-
-    };
+    });
 
 
-    localStorage.setItem(
-        "cleanloop-user",
-        JSON.stringify(user)
-    );
+    return availableCollectors[0];
+
+}
 
 
-    document.getElementById("registrationMessage")
-    .textContent =
-    "✓ Profile created successfully!";
+
+/*
+====================================================
+REQUEST COLLECTION
+====================================================
+*/
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
 
 
-    document.getElementById("registrationForm")
-    .reset();
+        const name =
+            document.getElementById("userName")
+            .value.trim();
 
-});
+
+        const mobile =
+            document.getElementById("userMobile")
+            .value.trim();
+
+
+        const address =
+            document.getElementById("userAddress")
+            .value.trim();
+
+
+
+        /*
+        MOBILE VALIDATION
+        */
+
+        if (
+            mobile.length !== 10 ||
+            isNaN(mobile)
+        ) {
+
+            requestMessage.textContent =
+                "Please enter a valid 10-digit mobile number.";
+
+            requestMessage.style.color =
+                "#c0392b";
+
+            return;
+
+        }
+
+
+
+        /*
+        FIND NEAREST COLLECTOR
+        */
+
+        const nearestCollector =
+            findNearestCollector();
+
+
+
+        if (!nearestCollector) {
+
+            requestMessage.textContent =
+                "No collector is currently available.";
+
+            requestMessage.style.color =
+                "#c0392b";
+
+            return;
+
+        }
+
+
+
+        /*
+        CREATE REQUEST
+        */
+
+        const request = {
+
+            id:
+                Date.now(),
+
+            name:
+                name,
+
+            mobile:
+                mobile,
+
+            address:
+                address,
+
+            requestedAt:
+                new Date().toLocaleString(),
+
+            status:
+                "Assigned",
+
+            collector:
+                nearestCollector.name,
+
+            collectorLocation:
+                nearestCollector.location,
+
+            distance:
+                nearestCollector.distance,
+
+            assignedAt:
+                new Date().toLocaleString(),
+
+            collection:
+                null
+
+        };
+
+
+
+        /*
+        GET OLD REQUESTS
+        */
+
+        const requests =
+            getCollectionRequests();
+
+
+
+        /*
+        ADD NEW REQUEST
+        */
+
+        requests.push(request);
+
+
+
+        /*
+        SAVE REQUESTS
+        */
+
+        localStorage.setItem(
+
+            "cleanloop-collection-requests",
+
+            JSON.stringify(requests)
+
+        );
+
+
+
+        /*
+        SHOW SUCCESS
+        */
+
+        requestMessage.textContent =
+            "✓ Collection request submitted successfully!";
+
+        requestMessage.style.color =
+            "#145c4f";
+
+
+
+        /*
+        DISPLAY USER DATA
+        */
+
+        document.getElementById(
+            "displayUserName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "displayUserMobile"
+        ).textContent = mobile;
+
+
+        document.getElementById(
+            "displayUserAddress"
+        ).textContent = address;
+
+
+        document.getElementById(
+            "displayRequestId"
+        ).textContent =
+            "#" + request.id;
+
+
+
+        document.getElementById(
+            "userInfo"
+        ).style.display = "grid";
+
+
+
+        /*
+        SHOW STATUS
+        */
+
+        statusCard.style.display =
+            "block";
+
+
+        requestStatus.textContent =
+            "Assigned";
+
+
+        collectorBox.innerHTML = `
+
+            <strong>
+                🚛 Collector Assigned
+            </strong>
+
+            <br><br>
+
+            Collector:
+            <strong>
+                ${nearestCollector.name}
+            </strong>
+
+            <br>
+
+            Zone:
+            ${nearestCollector.location}
+
+            <br>
+
+            Distance:
+            ${nearestCollector.distance} km
+
+            <br><br>
+
+            <span style="color:#145c4f;font-weight:700;">
+                ✓ Nearest available collector assigned automatically.
+            </span>
+
+        `;
+
+
+
+        /*
+        DISABLE REQUEST BUTTON
+        */
+
+        requestButton.disabled =
+            true;
+
+        requestButton.textContent =
+            "✓ Collection Request Assigned";
+
+    }
+);
 
 </script>
 
