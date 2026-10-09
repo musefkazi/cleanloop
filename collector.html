@@ -196,6 +196,40 @@
             </section>
 
 
+<!-- DASHBOARD SUMMARY -->
+<section class="panel-card" style="margin-bottom:20px;">
+    <h2>📊 Collection Overview</h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:15px;
+        margin-top:18px;
+    ">
+
+        <div class="info-box">
+            <small>📋 Assigned Requests</small>
+            <h2 id="assignedSummary">0</h2>
+        </div>
+
+        <div class="info-box">
+            <small>✅ Completed Today</small>
+            <h2 id="completedTodaySummary">0</h2>
+        </div>
+
+        <div class="info-box">
+            <small>🔴 High Priority</small>
+            <h2 id="highPrioritySummary">0</h2>
+        </div>
+
+        <div class="info-box">
+            <small>⚖️ Waste Collected</small>
+            <h2 id="wasteCollectedSummary">0.0 kg</h2>
+        </div>
+
+    </div>
+</section>
+
             <!-- ASSIGNED REQUEST -->
 
             <section class="panel-card request-card">
