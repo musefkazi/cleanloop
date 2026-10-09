@@ -412,6 +412,61 @@ function getAssignedRequests() {
 
 }
 
+function updateCollectorSummary() {
+    const requests = getRequests();
+
+    const assigned = requests.filter(function(request) {
+        return request.status === "Assigned" &&
+               request.collector === "Collector 01";
+    });
+
+    const completed = requests.filter(function(request) {
+        if (
+            request.status !== "Completed" ||
+            !request.collection
+        ) {
+            return false;
+        }
+
+        return request.collector === "Collector 01";
+    });
+
+    const today = new Date().toDateString();
+
+    const completedToday = completed.filter(function(request) {
+        return request.collection.collectedAt &&
+            !isNaN(new Date(request.collection.collectedAt)) &&
+            new Date(request.collection.collectedAt).toDateString() === today;
+    });
+
+    const highPriority = assigned.filter(function(request) {
+        const zone = request.collectorLocation || "";
+
+        const pendingInZone = requests.filter(function(item) {
+            return item.status === "Assigned" &&
+                   (item.collectorLocation || "") === zone;
+        }).length;
+
+        return pendingInZone >= 3;
+    });
+
+    const wasteCollected = completed.reduce(function(total, request) {
+        return total + (Number(request.collection.totalWeight) || 0);
+    }, 0);
+
+    document.getElementById("assignedSummary").textContent =
+        assigned.length;
+
+    document.getElementById("completedTodaySummary").textContent =
+        completedToday.length;
+
+    document.getElementById("highPrioritySummary").textContent =
+        highPriority.length;
+
+    document.getElementById("wasteCollectedSummary").textContent =
+        wasteCollected.toFixed(1) + " kg";
+}
+
 function renderAssignedRequests() {
     savedRequests = getRequests();
     const assignedRequests = getAssignedRequests();
@@ -669,10 +724,12 @@ document
             renderAssignedRequests();
 
         }, 1000);
+        updateCollectorSummary();
 
     });
 
 renderAssignedRequests();
+    updateCollectorSummary();
 
 // Auto-refresh assigned requests every second.
 setInterval(function() {
