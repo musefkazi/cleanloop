@@ -464,6 +464,63 @@ function getRequests() {
         localStorage.getItem("cleanloop-collection-requests")
     ) || [];
 }
+    
+function renderCollectionHistory() {
+    const requests = getRequests();
+
+    const historyContainer = document.getElementById(
+        "collectionHistoryContainer"
+    );
+
+    const completedRequests = requests.filter(function(request) {
+        return request.status === "Completed" &&
+               request.collection &&
+               request.collector === "Collector 01";
+    });
+
+    if (completedRequests.length === 0) {
+        historyContainer.innerHTML =
+            "<p>No completed collections yet.</p>";
+        return;
+    }
+
+    completedRequests.sort(function(a, b) {
+        return b.id - a.id;
+    });
+
+    historyContainer.innerHTML = "";
+
+    completedRequests.forEach(function(request) {
+        const collection = request.collection;
+
+        const card = document.createElement("div");
+
+        card.style.cssText =
+            "padding:15px;margin-top:12px;border:1px solid #dce8e5;border-radius:10px;";
+
+        const heading = document.createElement("h3");
+        heading.textContent =
+            "Request #" + request.id + " — " + (request.name || "User");
+
+        const details = document.createElement("p");
+        details.textContent =
+            "Wet: " + (Number(collection.wetWaste) || 0) + " kg | " +
+            "Dry: " + (Number(collection.dryWaste) || 0) + " kg | " +
+            "Recyclable: " + (Number(collection.recyclableWaste) || 0) + " kg";
+
+        const total = document.createElement("p");
+        total.textContent =
+            "Total: " + (Number(collection.totalWeight) || 0) + " kg";
+
+        const date = document.createElement("small");
+        date.textContent =
+            "Collected: " + (collection.collectedAt || "Date unavailable");
+
+        card.append(heading, details, total, date);
+        historyContainer.appendChild(card);
+    });
+}
+
 
 const requestContainer =
     document.getElementById("requestContainer");
@@ -867,6 +924,7 @@ document
 
 renderAssignedRequests();
     updateCollectorSummary();
+    renderCollectionHistory();
 document.getElementById("requestSearch").addEventListener(
     "input",
     renderAssignedRequests
