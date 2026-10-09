@@ -463,13 +463,57 @@ const formSection =
 let savedRequests = getRequests();
 let selectedRequestId = null;
 
+
 function getAssignedRequests() {
+
+    const searchText = (
+        document.getElementById("requestSearch")?.value || ""
+    ).toLowerCase().trim();
+
+    const selectedPriority =
+        document.getElementById("priorityFilter")?.value || "all";
+
+    const selectedZone =
+        document.getElementById("zoneFilter")?.value || "all";
 
     const assignedRequests = savedRequests.filter(function(request) {
 
-        return request.status === "Assigned" &&
-               request.collector === "Collector 01";
+        if (
+            request.status !== "Assigned" ||
+            request.collector !== "Collector 01"
+        ) {
+            return false;
+        }
 
+        const searchMatch =
+            (request.name || "").toLowerCase().includes(searchText) ||
+            (request.mobile || "").toLowerCase().includes(searchText) ||
+            (request.address || "").toLowerCase().includes(searchText);
+
+        const zone = request.collectorLocation || "";
+
+        const pendingCount = savedRequests.filter(function(item) {
+            return item.status === "Assigned" &&
+                   (item.collectorLocation || "") === zone;
+        }).length;
+
+        let priority = "LOW";
+
+        if (pendingCount >= 3) {
+            priority = "HIGH";
+        } else if (pendingCount === 2) {
+            priority = "MEDIUM";
+        }
+
+        const priorityMatch =
+            selectedPriority === "all" ||
+            selectedPriority === priority;
+
+        const zoneMatch =
+            selectedZone === "all" ||
+            selectedZone === zone;
+
+        return searchMatch && priorityMatch && zoneMatch;
     });
 
     assignedRequests.sort(function(a, b) {
@@ -479,22 +523,21 @@ function getAssignedRequests() {
 
         const pendingA = savedRequests.filter(function(item) {
             return item.status === "Assigned" &&
-                   item.collectorLocation === zoneA;
+                   (item.collectorLocation || "") === zoneA;
         }).length;
 
         const pendingB = savedRequests.filter(function(item) {
             return item.status === "Assigned" &&
-                   item.collectorLocation === zoneB;
+                   (item.collectorLocation || "") === zoneB;
         }).length;
 
         return pendingB - pendingA;
-
     });
 
     return assignedRequests;
-
 }
 
+    
 function updateCollectorSummary() {
     const requests = getRequests();
 
@@ -813,7 +856,20 @@ document
 
 renderAssignedRequests();
     updateCollectorSummary();
+document.getElementById("requestSearch").addEventListener(
+    "input",
+    renderAssignedRequests
+);
 
+document.getElementById("priorityFilter").addEventListener(
+    "change",
+    renderAssignedRequests
+);
+
+document.getElementById("zoneFilter").addEventListener(
+    "change",
+    renderAssignedRequests
+);
 // Auto-refresh assigned requests every second.
 setInterval(function() {
     renderAssignedRequests();
