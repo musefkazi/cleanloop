@@ -264,6 +264,57 @@
 
             <!-- ASSIGNED REQUEST -->
 
+            
+<!-- SEARCH AND FILTER -->
+<div style="
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:18px;
+">
+    <input
+        type="text"
+        id="requestSearch"
+        placeholder="🔍 Search name, mobile or address..."
+        style="
+            flex:1;
+            min-width:220px;
+            padding:12px;
+            border:1px solid #dce8e5;
+            border-radius:10px;
+        "
+    >
+
+    <select
+        id="priorityFilter"
+        style="
+            padding:12px;
+            border:1px solid #dce8e5;
+            border-radius:10px;
+        "
+    >
+        <option value="all">All Priorities</option>
+        <option value="HIGH">High Priority</option>
+        <option value="MEDIUM">Medium Priority</option>
+        <option value="LOW">Low Priority</option>
+    </select>
+
+    <select
+        id="zoneFilter"
+        style="
+            padding:12px;
+            border:1px solid #dce8e5;
+            border-radius:10px;
+        "
+    >
+        <option value="all">All Zones</option>
+        <option value="Zone A">Zone A</option>
+        <option value="Zone B">Zone B</option>
+        <option value="Zone C">Zone C</option>
+    </select>
+</div>
+
+
             <section class="panel-card request-card">
 
                 <h2>
